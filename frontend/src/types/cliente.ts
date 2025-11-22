@@ -3,5 +3,6 @@ export interface Paciente {
   nome: string;
   email: string;
   telefone?: string;
+  imovel?: string;
   dataNascimento: string;
 }

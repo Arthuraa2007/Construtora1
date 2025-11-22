@@ -1,5 +1,5 @@
 import React from "react";
-import type { Paciente } from "../../types/paciente";
+import type { Paciente } from "../../types/cliente";
 import {
   Table,
   TableBody,
@@ -30,7 +30,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
     "Nome",
     "Email",
     "Telefone",
-    "CPF",
+    "Imóveis",
     "Data de Nascimento",
     "Ações",
   ];
@@ -59,7 +59,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
                 align="center"
                 className="py-6 text-gray-500"
               >
-                Nenhum paciente encontrado.
+                Nenhum cliente encontrado.
               </TableCell>
             </TableRow>
           ) : (
@@ -68,7 +68,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
                 <TableCell align="center">{paciente.nome}</TableCell>
                 <TableCell align="center">{paciente.email}</TableCell>
                 <TableCell align="center">{paciente.telefone || "-"}</TableCell>
-                <TableCell align="center">{paciente.cpf}</TableCell>
+                <TableCell align="center">{paciente.imovel}</TableCell>
                 <TableCell align="center">
                   {paciente.dataNascimento?.split("T")[0] || "-"}
                 </TableCell>

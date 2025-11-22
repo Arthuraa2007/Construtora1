@@ -42,11 +42,11 @@ export const ConsultasTable = ({
 
   const colunas: string[] = [
     "Data/Hora",
-    "Paciente",
+    "Cliente",
     "CPF",
-    "Médico",
-    "Especialidade",
-    "Motivo",
+    "Atendente",
+    "Pagamento",
+    "Tipo de imóvel",
     "Ações",
   ];
 

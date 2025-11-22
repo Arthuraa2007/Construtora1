@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Paciente } from "../../types/paciente";
-import { updatePaciente } from "../../services/pacienteService";
+import type { Paciente } from "../../types/cliente";
+import { updatePaciente } from "../../services/clienteService";
 import { validateUpdatePaciente } from "../../schemas/validation";
 import {
   Dialog,
@@ -30,7 +30,7 @@ export const EditarPacienteModal = ({
     id: 0,
     nome: "",
     email: "",
-    cpf: "",
+    imovel: "",
     telefone: "",
     dataNascimento: "",
   };
@@ -76,8 +76,8 @@ export const EditarPacienteModal = ({
       setErrors({});
       onClose();
     } catch (error) {
-      console.error("Erro ao salvar paciente:", error);
-      setErrors({ submit: "Erro ao salvar paciente. Tente novamente." });
+      console.error("Erro ao salvar cliente:", error);
+      setErrors({ submit: "Erro ao salvar cliente. Tente novamente." });
     } finally {
       setSalvando(false);
     }
@@ -86,15 +86,15 @@ export const EditarPacienteModal = ({
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ fontWeight: 600, fontSize: "1.25rem" }}>
-        Editar Paciente
+        Editar Cliente
       </DialogTitle>
 
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
           <TextField
             fullWidth
-            label="Nome"
-            name="nome"
+            label="Cliente"
+            name="cliente"
             value={formData.nome}
             onChange={handleInputChange}
             placeholder="Digite o nome completo"
@@ -116,13 +116,13 @@ export const EditarPacienteModal = ({
 
           <TextField
             fullWidth
-            label="CPF"
-            name="cpf"
-            value={formData.cpf}
+            label="Imóvel"
+            name="imovel"
+            value={formData.imovel}
             onChange={handleInputChange}
-            placeholder="Digite o CPF"
-            error={!!errors.cpf}
-            helperText={errors.cpf}
+            placeholder="Digite o imóvel"
+            error={!!errors.imovel}
+            helperText={errors.imovel}
           />
 
           <TextField

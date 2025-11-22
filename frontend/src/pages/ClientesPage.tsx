@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import type { Paciente } from "../types/paciente";
-import { getPacientes, deletePaciente } from "../services/pacienteService";
+import type { Paciente } from "../types/cliente";
+import { getPacientes, deletePaciente } from "../services/clienteService";
 import {
   Box,
   Paper,
@@ -16,9 +16,9 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-import PacientesTable from "../components/pacientes/PacientesTable";
-import EditarPacienteModal from "../components/pacientes/EditarPacienteModal";
-import CriarPacienteModal from "../components/pacientes/CriarPacienteModal";
+import PacientesTable from "../components/pacientes/ClienteTable";
+import EditarPacienteModal from "../components/pacientes/EditarClienteModal";
+import CriarPacienteModal from "../components/pacientes/CriarClienteModal";
 import { useDebounce } from "../hooks/useDebounce";
 
 type SnackbarState = {
@@ -48,10 +48,10 @@ export const PacientesPage = () => {
         const data = await getPacientes();
         setPacientes(data);
       } catch (error) {
-        console.error("Erro ao buscar pacientes:", error);
+        console.error("Erro ao buscar clientes:", error);
         setSnackbar({
           open: true,
-          message: "Erro ao buscar pacientes.",
+          message: "Erro ao buscar clientes.",
           severity: "error",
         });
       }
@@ -68,14 +68,14 @@ export const PacientesPage = () => {
       setPacientes((prev) => prev.filter((p) => p.id !== id));
       setSnackbar({
         open: true,
-        message: "Paciente removido com sucesso.",
+        message: "Cliente removido com sucesso.",
         severity: "success",
       });
     } catch (error) {
-      console.error("Erro ao deletar paciente:", error);
+      console.error("Erro ao deletar cliente:", error);
       setSnackbar({
         open: true,
-        message: "Erro ao deletar paciente.",
+        message: "Erro ao deletar cliente.",
         severity: "error",
       });
     } finally {
@@ -97,7 +97,7 @@ export const PacientesPage = () => {
     );
     setSnackbar({
       open: true,
-      message: "Paciente atualizado com sucesso.",
+      message: "Cliente atualizado com sucesso.",
       severity: "success",
     });
   }, []);
@@ -106,7 +106,7 @@ export const PacientesPage = () => {
     setPacientes((prev) => [...prev, novoPaciente]);
     setSnackbar({
       open: true,
-      message: "Paciente cadastrado com sucesso.",
+      message: "Cliente cadastrado com sucesso.",
       severity: "success",
     });
   }, []);
@@ -122,7 +122,7 @@ export const PacientesPage = () => {
       return (
         paciente.nome.toLowerCase().includes(termoBusca) ||
         paciente.email.toLowerCase().includes(termoBusca) ||
-        paciente.cpf.includes(termoBusca) ||
+        (paciente.imovel?.toLowerCase().includes(termoBusca) ?? false) ||
         (paciente.telefone?.includes(termoBusca) ?? false)
       );
     });
@@ -160,13 +160,13 @@ export const PacientesPage = () => {
         </IconButton>
 
         <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
-          Lista de Pacientes
+          Lista de Clientes
         </Typography>
 
         <Box mb={3}>
           <TextField
             fullWidth
-            placeholder="Buscar por nome, email, CPF ou telefone..."
+            placeholder="Buscar por nome, email, Imóvel ou telefone..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             slotProps={{
@@ -214,7 +214,7 @@ export const PacientesPage = () => {
             className="uppercase font-bold"
             onClick={() => setAbrirModalCriar(true)}
           >
-            Novo Paciente
+            Novo Cliente
           </Button>
         </Box>
 

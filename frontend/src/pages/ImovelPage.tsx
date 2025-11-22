@@ -233,7 +233,22 @@ export const ConsultasPage = () => {
             theme.palette.mode === "dark" ? "#242424" : "background.paper",
           color: theme.palette.text.primary,
           borderRadius: 2,
-        })}
+           "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: "url('https://png.pngtree.com/thumb_back/fw800/background/20240611/pngtree-construction-cranes-and-building-silhouettes-image_15747530.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  filter: "brightness(0.85)",
+                  transform: "scale(1.12)",
+                  zIndex: -1,
+      },
+          
+  })}
       >
         <IconButton
           aria-label="voltar"
@@ -245,7 +260,7 @@ export const ConsultasPage = () => {
         </IconButton>
 
         <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
-          Gerenciar Consultas
+          Gerenciar Imóveis
         </Typography>
 
         <Box
@@ -257,7 +272,7 @@ export const ConsultasPage = () => {
           <Box flex={1}>
             <TextField
               fullWidth
-              placeholder="Buscar por paciente, médico, especialidade ou motivo..."
+              placeholder="Buscar por imóveis..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               slotProps={{
@@ -325,7 +340,7 @@ export const ConsultasPage = () => {
             className="uppercase font-bold"
             onClick={() => setModalCriarOpen(true)}
           >
-            Cadastrar Nova Consulta
+            Cadastrar Novo imóvel
           </Button>
         </Box>
 

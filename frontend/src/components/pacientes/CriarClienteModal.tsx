@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import type { Paciente } from "../../types/paciente";
-import { createPaciente } from "../../services/pacienteService";
+import type { Paciente } from "../../types/cliente";
+import { createPaciente } from "../../services/clienteService";
 import { validateCreatePaciente } from "../../schemas/validation";
 import {
   Dialog,
@@ -19,7 +19,7 @@ interface CriarPacienteModalProps {
   onSuccess: (novoPaciente: Paciente) => void;
 }
 
-export const CriarPacienteModal = ({
+export const CriarClienteModal = ({
   open,
   onClose,
   onSuccess,
@@ -27,7 +27,7 @@ export const CriarPacienteModal = ({
   const INITIAL_FORM_DATA = {
     nome: "",
     email: "",
-    cpf: "",
+    imovel: "",
     telefone: "",
     dataNascimento: "",
   };
@@ -66,8 +66,8 @@ export const CriarPacienteModal = ({
       setErrors({});
       onClose();
     } catch (error) {
-      console.error("Erro ao criar paciente:", error);
-      setErrors({ submit: "Erro ao criar paciente. Tente novamente." });
+      console.error("Erro ao criar cliente:", error);
+      setErrors({ submit: "Erro ao criar cliente. Tente novamente." });
     } finally {
       setSalvando(false);
     }
@@ -82,7 +82,7 @@ export const CriarPacienteModal = ({
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ fontWeight: 600, fontSize: "1.25rem" }}>
-        Cadastrar Novo Paciente
+        Cadastrar Novo Cliente
       </DialogTitle>
 
       <DialogContent>
@@ -99,41 +99,41 @@ export const CriarPacienteModal = ({
             helperText={errors.nome}
           />
 
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="Digite o email"
-            required
-            error={!!errors.email}
-            helperText={errors.email}
-          />
+<TextField
+  fullWidth
+  label="Email"
+  name="email"
+  type="email"
+  value={formData.email}
+  onChange={handleInputChange}
+  placeholder="Digite o email"
+  required
+  error={!!errors.email}
+  helperText={errors.email}
+/>
 
-          <TextField
-            fullWidth
-            label="CPF"
-            name="cpf"
-            value={formData.cpf}
-            onChange={handleInputChange}
-            placeholder="Digite o CPF"
-            required
-            error={!!errors.cpf}
-            helperText={errors.cpf}
-          />
+<TextField
+  fullWidth
+  label="Imóvel"
+  name="imovel"
+  value={formData.imovel}
+  onChange={handleInputChange}
+  placeholder="Informe o imóvel"
+  required
+  error={!!errors.imovel}
+  helperText={errors.imovel}
+/>
 
-          <TextField
-            fullWidth
-            label="Telefone"
-            name="telefone"
-            value={formData.telefone}
-            onChange={handleInputChange}
-            placeholder="Digite o telefone (opcional)"
-            error={!!errors.telefone}
-            helperText={errors.telefone}
-          />
+<TextField
+  fullWidth
+  label="Telefone"
+  name="telefone"
+  value={formData.telefone}
+  onChange={handleInputChange}
+  placeholder="Digite o telefone (opcional)"
+  error={!!errors.telefone}
+  helperText={errors.telefone}
+/>
 
           <TextField
             fullWidth
@@ -174,4 +174,4 @@ export const CriarPacienteModal = ({
   );
 };
 
-export default CriarPacienteModal;
+export default CriarClienteModal;

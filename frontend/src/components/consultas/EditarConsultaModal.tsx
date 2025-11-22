@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 import { updateConsultaSchema } from "../../schemas/consultaSchema";
 import { validateField } from "../../schemas/validation";
-import { getPacientes } from "../../services/pacienteService";
+import { getPacientes } from "../../services/clienteService";
 import { getMedicos } from "../../services/medicoService";
 import type { Consulta } from "../../types/consulta";
 import type { Medico } from "../../types/medico";
-import type { Paciente } from "../../types/paciente";
+import type { Paciente } from "../../types/cliente";
 
 interface EditarConsultaModalProps {
   open: boolean;
@@ -153,7 +153,7 @@ export const EditarConsultaModal = ({
             >
               {pacientes.map((paciente) => (
                 <MenuItem key={paciente.id} value={paciente.id}>
-                  {paciente.nome} - {paciente.cpf}
+                  {paciente.nome} - {paciente.imovel}
                 </MenuItem>
               ))}
             </TextField>

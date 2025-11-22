@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { createConsultaSchema } from "../../schemas/consultaSchema";
 import { validateField } from "../../schemas/validation";
-import { getPacientes } from "../../services/pacienteService";
+import { getPacientes } from "../../services/clienteService";
 import { getMedicos } from "../../services/medicoService";
-import type { Paciente } from "../../types/paciente";
+import type { Paciente } from "../../types/cliente";
 import type { Medico } from "../../types/medico";
 
 interface CriarConsultaModalProps {
@@ -119,7 +119,7 @@ export const CriarConsultaModal = ({
       await onSave(formData);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar consulta:", error);
+      console.error("Erro ao criar Imóvel:", error);
     } finally {
       setLoading(false);
     }
@@ -127,7 +127,7 @@ export const CriarConsultaModal = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Nova Consulta</DialogTitle>
+      <DialogTitle>Novo Móvel</DialogTitle>
       <DialogContent>
         {loadingData ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 4, mt: 2 }}>
@@ -137,7 +137,7 @@ export const CriarConsultaModal = ({
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
             <TextField
               select
-              label="Paciente"
+              label="Cliente"
               value={formData.pacienteId}
               onChange={(e) =>
                 handleInputChange("pacienteId", Number(e.target.value))
@@ -147,17 +147,17 @@ export const CriarConsultaModal = ({
               helperText={touched.pacienteId && errors.pacienteId}
               fullWidth
             >
-              <MenuItem value={0}>Selecione um paciente</MenuItem>
+              <MenuItem value={0}>Selecione um Cliente</MenuItem>
               {pacientes.map((paciente) => (
                 <MenuItem key={paciente.id} value={paciente.id}>
-                  {paciente.nome} - {paciente.cpf}
+                  {paciente.nome} - {paciente.imovel}
                 </MenuItem>
               ))}
             </TextField>
 
             <TextField
               select
-              label="Médico"
+              label="Atendente"
               value={formData.medicoId}
               onChange={(e) =>
                 handleInputChange("medicoId", Number(e.target.value))
@@ -167,7 +167,7 @@ export const CriarConsultaModal = ({
               helperText={touched.medicoId && errors.medicoId}
               fullWidth
             >
-              <MenuItem value={0}>Selecione um médico</MenuItem>
+              <MenuItem value={0}>Selecione um Atendente</MenuItem>
               {medicos.map((medico) => (
                 <MenuItem key={medico.id} value={medico.id}>
                   {medico.nome} - {medico.especialidade}
@@ -192,7 +192,7 @@ export const CriarConsultaModal = ({
             />
 
             <TextField
-              label="Motivo (opcional)"
+              label="Tipo de imóvel"
               value={formData.motivo}
               onChange={(e) => handleInputChange("motivo", e.target.value)}
               onBlur={() => handleBlur("motivo")}
