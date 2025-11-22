@@ -1,6 +1,6 @@
 import { Router } from "express";
 import secretarioRoutes from "./secretarioRoutes";
-import pacienteRoutes from "./pacienteRoutes";
+import pacienteRoutes from "./clienteRoutes";
 import medicoRoutes from "./medicoRoutes";
 import consultaRoutes from "./consultaRoutes";
 import autenticacaoRoutes from "./autenticacaoRoutes";

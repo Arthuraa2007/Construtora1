@@ -12,11 +12,11 @@ CREATE TABLE "public"."secretarios" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."pacientes" (
+CREATE TABLE "public"."clientes" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "cpf" TEXT NOT NULL,
+    "imovel" TEXT NOT NULL,
     "telefone" TEXT,
     "dataNascimento" DATE NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -42,7 +42,7 @@ CREATE TABLE "public"."medicos" (
 CREATE TABLE "public"."consultas" (
     "id" SERIAL NOT NULL,
     "dataHora" TIMESTAMP(3) NOT NULL,
-    "motivo" TEXT,
+    "tipoimovel" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "pacienteId" INTEGER NOT NULL,
@@ -55,10 +55,10 @@ CREATE TABLE "public"."consultas" (
 CREATE UNIQUE INDEX "secretarios_email_key" ON "public"."secretarios"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "pacientes_email_key" ON "public"."pacientes"("email");
+CREATE UNIQUE INDEX "cliente_email_key" ON "public"."cliente"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "pacientes_cpf_key" ON "public"."pacientes"("cpf");
+CREATE UNIQUE INDEX "clientes_imovel_key" ON "public"."cliente"("imovel");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "medicos_email_key" ON "public"."medicos"("email");
@@ -67,7 +67,7 @@ CREATE UNIQUE INDEX "medicos_email_key" ON "public"."medicos"("email");
 CREATE UNIQUE INDEX "medicos_crm_key" ON "public"."medicos"("crm");
 
 -- AddForeignKey
-ALTER TABLE "public"."consultas" ADD CONSTRAINT "consultas_pacienteId_fkey" FOREIGN KEY ("pacienteId") REFERENCES "public"."pacientes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."imovel" ADD CONSTRAINT "consultas_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "public"."clientes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."consultas" ADD CONSTRAINT "consultas_medicoId_fkey" FOREIGN KEY ("medicoId") REFERENCES "public"."medicos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."imovel" ADD CONSTRAINT "consultas_medicoId_fkey" FOREIGN KEY ("medicoId") REFERENCES "public"."medicos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

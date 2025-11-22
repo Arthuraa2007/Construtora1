@@ -34,7 +34,7 @@ export const updateConsulta = async (req: Request, res: Response) => {
     const consulta = await consultaService.update(Number(req.params.id), req.body);
     return res.json(consulta);
   } catch (error: any) {
-    if (error.code === 'P2025') return res.status(404).json({ message: 'Consulta não encontrada.' });
+    if (error.code === 'P2025') return res.status(404).json({ message: 'Imóvel não encontrado.' });
     return res.status(500).json({ message: error.message });
   }
 };
@@ -44,7 +44,7 @@ export const deleteConsulta = async (req: Request, res: Response) => {
     await consultaService.remove(Number(req.params.id));
     return res.status(204).send();
   } catch (error: any) {
-    if (error.code === 'P2025') return res.status(404).json({ message: 'Consulta não encontrada.' });
+    if (error.code === 'P2025') return res.status(404).json({ message: 'Imóvel não encontrado.' });
     return res.status(500).json({ message: error.message });
   }
 };

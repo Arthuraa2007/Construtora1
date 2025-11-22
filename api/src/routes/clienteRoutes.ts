@@ -5,7 +5,7 @@ import {
   getPacienteById,
   updatePaciente,
   deletePaciente,
-} from "../controllers/pacienteController";
+} from "../controllers/clienteController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
   createPacienteSchema,
@@ -158,6 +158,6 @@ router.put(
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete("/pacientes/:id", validateParams(idParamSchema), deletePaciente);
+router.delete("/cliente/:id", validateParams(idParamSchema), deletePaciente);
 
 export default router;
