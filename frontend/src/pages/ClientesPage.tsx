@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import type { Paciente } from "../types/cliente";
-import { getPacientes, deletePaciente } from "../services/clienteService";
+import type { Paciente } from "../types/pacientes";
+import { getPacientes, deletePaciente } from "../services/pacienteService";
+
 import {
   Box,
   Paper,
@@ -13,8 +14,10 @@ import {
   InputAdornment,
   Chip,
 } from "@mui/material";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SearchIcon from "@mui/icons-material/Search";
+
 import { useNavigate } from "react-router-dom";
 import PacientesTable from "../components/pacientes/ClienteTable";
 import EditarPacienteModal from "../components/pacientes/EditarClienteModal";
@@ -29,19 +32,24 @@ type SnackbarState = {
 
 export const PacientesPage = () => {
   const navigate = useNavigate();
+
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [abrirModalCriar, setAbrirModalCriar] = useState(false);
+  const [pacienteEditando, setPacienteEditando] = useState<Paciente | null>(
+    null
+  );
+
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     open: false,
     message: "",
     severity: "info",
   });
-  const [pacienteEditando, setPacienteEditando] = useState<Paciente | null>(
-    null
-  );
-  const [abrirModalCriar, setAbrirModalCriar] = useState<boolean>(false);
 
+  // ============================
+  // Carregar lista inicial
+  // ============================
   useEffect(() => {
     const carregarPacientes = async () => {
       try {
@@ -49,94 +57,100 @@ export const PacientesPage = () => {
         setPacientes(data);
       } catch (error) {
         console.error("Erro ao buscar clientes:", error);
-        setSnackbar({
-          open: true,
-          message: "Erro ao buscar clientes.",
-          severity: "error",
-        });
+        abrirSnackbar("Erro ao buscar clientes.", "error");
       }
     };
 
     carregarPacientes();
   }, []);
 
+  // ============================
+  // Snackbar Helper
+  // ============================
+  const abrirSnackbar = (
+    message: string,
+    severity: SnackbarState["severity"]
+  ) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  // ============================
+  // Deletar Paciente
+  // ============================
   const handleDelete = useCallback(async (id: number) => {
     setDeletingId(id);
 
     try {
       await deletePaciente(id);
       setPacientes((prev) => prev.filter((p) => p.id !== id));
-      setSnackbar({
-        open: true,
-        message: "Cliente removido com sucesso.",
-        severity: "success",
-      });
+      abrirSnackbar("Cliente removido com sucesso.", "success");
     } catch (error) {
       console.error("Erro ao deletar cliente:", error);
-      setSnackbar({
-        open: true,
-        message: "Erro ao deletar cliente.",
-        severity: "error",
-      });
+      abrirSnackbar("Erro ao deletar cliente.", "error");
     } finally {
       setDeletingId(null);
     }
   }, []);
 
-  const handleOpenEditModal = useCallback((paciente: Paciente) => {
-    setPacienteEditando(paciente);
-  }, []);
+  // ============================
+  // Editar Paciente
+  // ============================
+  const handleOpenEditModal = useCallback(
+    (paciente: Paciente) => setPacienteEditando(paciente),
+    []
+  );
+  const handleCloseEditModal = useCallback(
+    () => setPacienteEditando(null),
+    []
+  );
 
-  const handleCloseEditModal = useCallback(() => {
-    setPacienteEditando(null);
-  }, []);
+  const handleSavePaciente = useCallback(
+    (pacienteAtualizado: Paciente) => {
+      setPacientes((prev) =>
+        prev.map((p) => (p.id === pacienteAtualizado.id ? pacienteAtualizado : p))
+      );
+      abrirSnackbar("Cliente atualizado com sucesso.", "success");
+    },
+    []
+  );
 
-  const handleSavePaciente = useCallback((pacienteAtualizado: Paciente) => {
-    setPacientes((prev) =>
-      prev.map((p) => (p.id === pacienteAtualizado.id ? pacienteAtualizado : p))
-    );
-    setSnackbar({
-      open: true,
-      message: "Cliente atualizado com sucesso.",
-      severity: "success",
-    });
-  }, []);
+  // ============================
+  // Criar Paciente
+  // ============================
+  const handleSucessoCriarPaciente = useCallback(
+    (novoPaciente: Paciente) => {
+      setPacientes((prev) => [...prev, novoPaciente]);
+      abrirSnackbar("Cliente cadastrado com sucesso.", "success");
+    },
+    []
+  );
 
-  const handleSucessoCriarPaciente = useCallback((novoPaciente: Paciente) => {
-    setPacientes((prev) => [...prev, novoPaciente]);
-    setSnackbar({
-      open: true,
-      message: "Cliente cadastrado com sucesso.",
-      severity: "success",
-    });
-  }, []);
-
+  // ============================
+  // Busca com debounce
+  // ============================
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const pacientesFiltrados = useMemo(() => {
-    if (!debouncedSearchTerm.trim()) return pacientes;
+    const termo = debouncedSearchTerm.toLowerCase().trim();
+    if (!termo) return pacientes;
 
-    const termoBusca = debouncedSearchTerm.toLowerCase().trim();
+    return pacientes.filter((p) => {
+      const nome = p.nome?.toLowerCase() ?? "";
+      const email = p.email?.toLowerCase() ?? "";
+      const cpf = p.cpf?.toLowerCase() ?? "";
+      const telefone = p.telefone ?? "";
 
-    return pacientes.filter((paciente) => {
       return (
-        paciente.nome.toLowerCase().includes(termoBusca) ||
-        paciente.email.toLowerCase().includes(termoBusca) ||
-        (paciente.imovel?.toLowerCase().includes(termoBusca) ?? false) ||
-        (paciente.telefone?.includes(termoBusca) ?? false)
+        nome.includes(termo) ||
+        email.includes(termo) ||
+        cpf.includes(termo) ||
+        telefone.includes(termo)
       );
     });
   }, [pacientes, debouncedSearchTerm]);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      minHeight="100vh"
-      bgcolor="background.default"
-      p={3}
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" p={3}>
       <Paper
         elevation={3}
         sx={(theme) => ({
@@ -144,31 +158,30 @@ export const PacientesPage = () => {
           maxWidth: 1000,
           p: 3,
           position: "relative",
-          bgcolor:
-            theme.palette.mode === "dark" ? "#242424" : "background.paper",
+          bgcolor: theme.palette.background.paper,
           color: theme.palette.text.primary,
           borderRadius: 2,
         })}
       >
         <IconButton
-          aria-label="voltar"
           onClick={() => navigate("/home")}
-          size="small"
           sx={{ position: "absolute", left: 16, top: 16 }}
         >
-          <ArrowBackIcon fontSize="small" />
+          <ArrowBackIcon />
         </IconButton>
 
         <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
           Lista de Clientes
         </Typography>
 
+        {/* Campo de Busca */}
         <Box mb={3}>
           <TextField
             fullWidth
-            placeholder="Buscar por nome, email, Imóvel ou telefone..."
+            placeholder="Buscar por nome, email, CPF ou telefone..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            size="small"
             slotProps={{
               input: {
                 startAdornment: (
@@ -178,8 +191,8 @@ export const PacientesPage = () => {
                 ),
               },
             }}
-            size="small"
           />
+
           {debouncedSearchTerm && (
             <Box mt={1} display="flex" alignItems="center" gap={1}>
               <Typography variant="body2" color="text.secondary">
@@ -200,6 +213,7 @@ export const PacientesPage = () => {
           )}
         </Box>
 
+        {/* Tabela */}
         <PacientesTable
           pacientes={pacientesFiltrados}
           deletingId={deletingId}
@@ -207,17 +221,14 @@ export const PacientesPage = () => {
           onEdit={handleOpenEditModal}
         />
 
+        {/* Botão Novo Cliente */}
         <Box mt={3} display="flex" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="primary"
-            className="uppercase font-bold"
-            onClick={() => setAbrirModalCriar(true)}
-          >
+          <Button variant="contained" color="primary" onClick={() => setAbrirModalCriar(true)}>
             Novo Cliente
           </Button>
         </Box>
 
+        {/* Snackbar */}
         <Snackbar
           open={snackbar.open}
           autoHideDuration={4000}
@@ -225,8 +236,8 @@ export const PacientesPage = () => {
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
           <Alert
-            onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
             severity={snackbar.severity}
+            onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
             sx={{ width: "100%" }}
           >
             {snackbar.message}
@@ -234,8 +245,9 @@ export const PacientesPage = () => {
         </Snackbar>
       </Paper>
 
+      {/* Modais */}
       <EditarPacienteModal
-        open={pacienteEditando !== null}
+        open={!!pacienteEditando}
         paciente={pacienteEditando}
         onClose={handleCloseEditModal}
         onSave={handleSavePaciente}

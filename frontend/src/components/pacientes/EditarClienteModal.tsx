@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Paciente } from "../../types/cliente";
-import { updatePaciente } from "../../services/clienteService";
+import type { Paciente } from "../../types/pacientes";
+import { updatePaciente } from "../../services/pacienteService";
 import { validateUpdatePaciente } from "../../schemas/validation";
 import {
   Dialog,
@@ -118,11 +118,11 @@ export const EditarPacienteModal = ({
             fullWidth
             label="Imóvel"
             name="imovel"
-            value={formData.imovel}
+            value={formData.cpf}
             onChange={handleInputChange}
             placeholder="Digite o imóvel"
-            error={!!errors.imovel}
-            helperText={errors.imovel}
+            error={!!errors.cpf}
+            helperText={errors.cpf}
           />
 
           <TextField

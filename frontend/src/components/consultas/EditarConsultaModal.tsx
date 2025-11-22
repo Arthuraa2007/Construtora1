@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 import { updateConsultaSchema } from "../../schemas/consultaSchema";
 import { validateField } from "../../schemas/validation";
-import { getPacientes } from "../../services/clienteService";
+import { getPacientes } from "../../services/pacienteService";
 import { getMedicos } from "../../services/medicoService";
 import type { Consulta } from "../../types/consulta";
 import type { Medico } from "../../types/medico";
-import type { Paciente } from "../../types/cliente";
+import type { Paciente } from "../../types/pacientes";
 
 interface EditarConsultaModalProps {
   open: boolean;

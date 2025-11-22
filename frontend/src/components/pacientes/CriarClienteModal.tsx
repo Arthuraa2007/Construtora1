@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import type { Paciente } from "../../types/cliente";
-import { createPaciente } from "../../services/clienteService";
+import type { Paciente } from "../../types/pacientes";
+import { createPaciente } from "../../services/pacienteService";
 import { validateCreatePaciente } from "../../schemas/validation";
 import {
   Dialog,
@@ -19,7 +19,7 @@ interface CriarPacienteModalProps {
   onSuccess: (novoPaciente: Paciente) => void;
 }
 
-export const CriarClienteModal = ({
+export const CriarPacienteModal = ({
   open,
   onClose,
   onSuccess,
@@ -114,15 +114,15 @@ export const CriarClienteModal = ({
 
 <TextField
   fullWidth
-  label="Imóvel"
-  name="imovel"
-  value={formData.imovel}
+  label="CPF"
+  name="cpf"
+  value={formData.cpf}
   onChange={handleInputChange}
-  placeholder="Informe o imóvel"
-  required
-  error={!!errors.imovel}
-  helperText={errors.imovel}
+  placeholder="Digite o CPF"
+  error={!!errors.cpf}
+  helperText={errors.cpf}
 />
+
 
 <TextField
   fullWidth
@@ -174,4 +174,4 @@ export const CriarClienteModal = ({
   );
 };
 
-export default CriarClienteModal;
+export default CriarPacienteModal;

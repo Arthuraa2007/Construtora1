@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { createConsultaSchema } from "../../schemas/consultaSchema";
 import { validateField } from "../../schemas/validation";
-import { getPacientes } from "../../services/clienteService";
+import { getPacientes } from "../../services/pacienteService";
 import { getMedicos } from "../../services/medicoService";
-import type { Paciente } from "../../types/cliente";
+import type { Paciente } from "../../types/pacientes";
 import type { Medico } from "../../types/medico";
 
 interface CriarConsultaModalProps {
