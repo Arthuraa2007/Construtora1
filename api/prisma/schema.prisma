@@ -29,18 +29,18 @@ model Secretario {
   @@map("secretarios")
 }
 
-model Cliente {
+model Paciente {
   id             Int        @id @default(autoincrement())
   nome           String
   email          String     @unique
-  imovel            String     @unique
+  cpf            String     @unique
   telefone       String?
   dataNascimento DateTime   @db.Date
-  consultas      Imovel[] // Relação: Um paciente pode ter várias consultas
+  consultas      Consulta[] // Relação: Um paciente pode ter várias consultas
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
-  @@map("clientes")
+  @@map("pacientes")
 }
 
 model Medico {
@@ -49,14 +49,14 @@ model Medico {
   email         String     @unique
   crm           String     @unique
   especialidade String
-  consultas     Imovel[] // Relação: Um médico pode ter várias consultas
+  consultas     Consulta[] // Relação: Um médico pode ter várias consultas
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
   @@map("medicos")
 }
 
-model Imovel {
+model Consulta {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
   tipoImovel     String?
@@ -66,7 +66,7 @@ model Imovel {
   medicoId   Int
 
   // Relações (chaves estrangeiras)
-  paciente Cliente @relation(fields: [pacienteId], references: [id])
+  paciente Paciente @relation(fields: [pacienteId], references: [id])
   medico   Medico   @relation(fields: [medicoId], references: [id])
 
   @@map("consultas") // Nome da tabela no banco de dados
