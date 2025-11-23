@@ -5,7 +5,7 @@ import {
   getConsultaById,
   updateConsulta,
   deleteConsulta,
-} from "../controllers/imovelController";
+} from "../controllers/consultaController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
   createConsultaSchema,

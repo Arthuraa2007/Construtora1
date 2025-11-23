@@ -15,8 +15,6 @@ datasource db {
 }
 
 
-
-
 model Secretario {
   id        Int      @id @default(autoincrement())
   nome      String
@@ -59,7 +57,7 @@ model Medico {
 model Consulta {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
-  tipoImovel     String?
+  motivo     String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   pacienteId Int

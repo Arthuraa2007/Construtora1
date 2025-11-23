@@ -28,7 +28,7 @@ export const getPacienteById = async (req: Request, res: Response) => {
   try {
     const paciente = await pacienteService.getById(Number(req.params.id));
     if (!paciente)
-      return res.status(404).json({ message: "Cliente não encontrado" });
+      return res.status(404).json({ message: "Paciente não encontrado" });
     return res.json(paciente);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
@@ -44,7 +44,7 @@ export const updatePaciente = async (req: Request, res: Response) => {
     return res.json(paciente);
   } catch (error: any) {
     if (error.code === "P2025")
-      return res.status(404).json({ message: "Cliente não encontrado" });
+      return res.status(404).json({ message: "Paciente não encontrado" });
     return res.status(500).json({ message: error.message });
   }
 };
@@ -55,7 +55,7 @@ export const deletePaciente = async (req: Request, res: Response) => {
     return res.status(204).send();
   } catch (error: any) {
     if (error.code === "P2025")
-      return res.status(404).json({ message: "Cliente não encontrado" });
+      return res.status(404).json({ message: "Paciente não encontrado" });
     return res.status(500).json({ message: error.message });
   }
 };
