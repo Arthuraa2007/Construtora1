@@ -14,7 +14,7 @@ import { createConsultaSchema } from "../../schemas/consultaSchema";
 import { validateField } from "../../schemas/validation";
 import { getPacientes } from "../../services/pacienteService";
 import { getMedicos } from "../../services/medicoService";
-import type { Paciente } from "../../types/pacientes";
+import type { Paciente } from "../../types/paciente";
 import type { Medico } from "../../types/medico";
 
 interface CriarConsultaModalProps {
@@ -150,7 +150,7 @@ export const CriarConsultaModal = ({
               <MenuItem value={0}>Selecione um Cliente</MenuItem>
               {pacientes.map((paciente) => (
                 <MenuItem key={paciente.id} value={paciente.id}>
-                  {paciente.nome} - {paciente.imovel}
+                  {paciente.nome} - {paciente.cpf}
                 </MenuItem>
               ))}
             </TextField>

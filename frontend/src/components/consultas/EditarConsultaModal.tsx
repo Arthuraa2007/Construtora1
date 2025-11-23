@@ -16,7 +16,7 @@ import { getPacientes } from "../../services/pacienteService";
 import { getMedicos } from "../../services/medicoService";
 import type { Consulta } from "../../types/consulta";
 import type { Medico } from "../../types/medico";
-import type { Paciente } from "../../types/pacientes";
+import type { Paciente } from "../../types/paciente";
 
 interface EditarConsultaModalProps {
   open: boolean;

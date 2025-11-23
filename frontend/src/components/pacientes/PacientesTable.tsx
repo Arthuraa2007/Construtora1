@@ -1,5 +1,5 @@
 import React from "react";
-import type { Paciente } from "../../types/pacientes";
+import type { Paciente } from "../../types/paciente";
 import {
   Table,
   TableBody,
@@ -30,7 +30,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
     "Nome",
     "Email",
     "Telefone",
-    "Imóveis",
+    "CPF",
     "Data de Nascimento",
     "Ações",
   ];
@@ -59,7 +59,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
                 align="center"
                 className="py-6 text-gray-500"
               >
-                Nenhum cliente encontrado.
+                Nenhum paciente encontrado.
               </TableCell>
             </TableRow>
           ) : (

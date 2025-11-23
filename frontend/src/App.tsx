@@ -4,7 +4,7 @@ import Home from "./pages/HomePage";
 import ThemeToggleFloating from "./components/ThemeToggleFloating";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { useState } from "react";
-import PacientesPage from "./pages/ClientesPage";
+import PacientesPage from "./pages/PacientesPage";
 import { ConsultasPage } from "./pages/ImovelPage";
 
 function App() {

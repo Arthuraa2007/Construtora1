@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import type { Paciente } from "../../types/pacientes";
-import { updatePaciente } from "../../services/pacienteService";
-import { validateUpdatePaciente } from "../../schemas/validation";
+import { useState, useCallback } from "react";
+import type { Paciente } from "../../types/paciente";
+import { createPaciente } from "../../services/pacienteService";
+import { validateCreatePaciente } from "../../schemas/validation";
 import {
   Dialog,
   DialogTitle,
@@ -13,41 +13,28 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-interface EditarPacienteModalProps {
+interface CriarPacienteModalProps {
   open: boolean;
-  paciente: Paciente | null;
   onClose: () => void;
-  onSave: (pacienteAtualizado: Paciente) => void;
+  onSuccess: (novoPaciente: Paciente) => void;
 }
 
-export const EditarPacienteModal = ({
+export const CriarPacienteModal = ({
   open,
-  paciente,
   onClose,
-  onSave,
-}: EditarPacienteModalProps) => {
-  const INITIAL_FORM_DATA: Paciente = {
-    id: 0,
+  onSuccess,
+}: CriarPacienteModalProps) => {
+  const INITIAL_FORM_DATA = {
     nome: "",
     email: "",
-    imovel: "",
+    cpf: "",
     telefone: "",
     dataNascimento: "",
   };
 
-  const [formData, setFormData] = useState<Paciente>(INITIAL_FORM_DATA);
-  const [salvando, setSalvando] = useState(false);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (paciente && open) {
-      setFormData({
-        ...paciente,
-        dataNascimento: paciente.dataNascimento?.split("T")[0] || "",
-      });
-      setErrors({});
-    }
-  }, [paciente, open]);
+  const [salvando, setSalvando] = useState(false);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,13 +43,15 @@ export const EditarPacienteModal = ({
         ...prev,
         [name]: value,
       }));
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+      if (errors[name]) {
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+      }
     },
-    []
+    [errors]
   );
 
   const handleSave = useCallback(async () => {
-    const validation = validateUpdatePaciente(formData);
+    const validation = validateCreatePaciente(formData);
 
     if (!validation.success) {
       setErrors(validation.errors);
@@ -71,33 +60,45 @@ export const EditarPacienteModal = ({
 
     setSalvando(true);
     try {
-      await updatePaciente(validation.data.id, validation.data);
-      onSave(validation.data);
+      const novoPaciente = await createPaciente({
+        ...validation.data,
+        cpf: validation.data.cpf || "",
+        telefone: validation.data.telefone || "",
+      });
+      onSuccess(novoPaciente);
+      setFormData(INITIAL_FORM_DATA);
       setErrors({});
       onClose();
     } catch (error) {
-      console.error("Erro ao salvar cliente:", error);
-      setErrors({ submit: "Erro ao salvar cliente. Tente novamente." });
+      console.error("Erro ao criar paciente:", error);
+      setErrors({ submit: "Erro ao criar paciente. Tente novamente." });
     } finally {
       setSalvando(false);
     }
-  }, [formData, onSave, onClose]);
+  }, [formData, onSuccess, onClose]);
+
+  const handleClose = useCallback(() => {
+    setFormData(INITIAL_FORM_DATA);
+    setErrors({});
+    onClose();
+  }, [onClose]);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ fontWeight: 600, fontSize: "1.25rem" }}>
-        Editar Cliente
+        Cadastrar Novo Paciente
       </DialogTitle>
 
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
           <TextField
             fullWidth
-            label="Cliente"
-            name="cliente"
+            label="Nome"
+            name="nome"
             value={formData.nome}
             onChange={handleInputChange}
             placeholder="Digite o nome completo"
+            required
             error={!!errors.nome}
             helperText={errors.nome}
           />
@@ -110,17 +111,19 @@ export const EditarPacienteModal = ({
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Digite o email"
+            required
             error={!!errors.email}
             helperText={errors.email}
           />
 
           <TextField
             fullWidth
-            label="Imóvel"
-            name="imovel"
+            label="CPF"
+            name="cpf"
             value={formData.cpf}
             onChange={handleInputChange}
-            placeholder="Digite o imóvel"
+            placeholder="Digite o CPF"
+            required
             error={!!errors.cpf}
             helperText={errors.cpf}
           />
@@ -129,9 +132,9 @@ export const EditarPacienteModal = ({
             fullWidth
             label="Telefone"
             name="telefone"
-            value={formData.telefone || ""}
+            value={formData.telefone}
             onChange={handleInputChange}
-            placeholder="Digite o telefone"
+            placeholder="Digite o telefone (opcional)"
             error={!!errors.telefone}
             helperText={errors.telefone}
           />
@@ -143,6 +146,7 @@ export const EditarPacienteModal = ({
             value={formData.dataNascimento}
             onChange={handleInputChange}
             placeholder="YYYY-MM-DD"
+            required
             error={!!errors.dataNascimento}
             helperText={errors.dataNascimento}
           />
@@ -150,7 +154,7 @@ export const EditarPacienteModal = ({
       </DialogContent>
 
       <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose} color="inherit">
+        <Button onClick={handleClose} color="inherit">
           Cancelar
         </Button>
 
@@ -166,7 +170,7 @@ export const EditarPacienteModal = ({
               Salvando...
             </>
           ) : (
-            "Salvar"
+            "Cadastrar"
           )}
         </Button>
       </DialogActions>
@@ -174,4 +178,4 @@ export const EditarPacienteModal = ({
   );
 };
 
-export default EditarPacienteModal;
+export default CriarPacienteModal;

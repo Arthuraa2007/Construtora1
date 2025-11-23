@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Paciente } from "../types/pacientes";
+import type { Paciente } from "../types/paciente";
 import { API_ENDPOINTS } from "../config/api";
 
 export const getPacientes = async (): Promise<Paciente[]> => {
