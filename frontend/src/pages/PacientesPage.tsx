@@ -72,10 +72,10 @@ export const PacientesPage = () => {
         severity: "success",
       });
     } catch (error) {
-      console.error("Erro ao deletar paciente:", error);
+      console.error("Erro ao deletar cliente:", error);
       setSnackbar({
         open: true,
-        message: "Erro ao deletar paciente.",
+        message: "Erro ao deletar cliente.",
         severity: "error",
       });
     } finally {
@@ -160,7 +160,7 @@ export const PacientesPage = () => {
         </IconButton>
 
         <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
-          Lista de Pacientes
+          Lista de Clientes
         </Typography>
 
         <Box mb={3}>

@@ -2,6 +2,8 @@ import axios from "axios";
 import type { Consulta } from "../types/consulta";
 import { API_ENDPOINTS } from "../config/api";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3333";
+
 export const getConsultas = async (): Promise<Consulta[]> => {
   const response = await axios.get(API_ENDPOINTS.CONSULTAS);
   return response.data;
@@ -20,3 +22,5 @@ export const createConsulta = async (dados: Omit<Consulta, "id">): Promise<Consu
   const response = await axios.post(API_ENDPOINTS.CONSULTAS, dados, {});
   return response.data;
 };
+
+

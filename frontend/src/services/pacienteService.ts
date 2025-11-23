@@ -2,6 +2,9 @@ import axios from "axios";
 import type { Paciente } from "../types/paciente";
 import { API_ENDPOINTS } from "../config/api";
 
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3333";
+
 export const getPacientes = async (): Promise<Paciente[]> => {
   const res = await axios.get<Paciente[]>(API_ENDPOINTS.PACIENTES);
   return res.data;

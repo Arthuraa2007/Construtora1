@@ -111,14 +111,14 @@ export const ConsultasPage = () => {
         await carregarConsultas();
         setSnackbar({
           open: true,
-          message: "Consulta atualizada com sucesso.",
+          message: "Imovel atualizado com sucesso.",
           severity: "success",
         });
       } catch (error) {
-        console.error("Erro ao atualizar consulta:", error);
+        console.error("Erro ao atualizar imóvel:", error);
         setSnackbar({
           open: true,
-          message: "Erro ao atualizar consulta.",
+          message: "Erro ao atualizar imóvel.",
           severity: "error",
         });
         throw error;

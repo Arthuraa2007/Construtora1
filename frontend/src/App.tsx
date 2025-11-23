@@ -5,7 +5,7 @@ import ThemeToggleFloating from "./components/ThemeToggleFloating";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { useState } from "react";
 import PacientesPage from "./pages/PacientesPage";
-import { ConsultasPage } from "./pages/ImovelPage";
+import { ConsultasPage } from "./pages/ConsultalPage";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
