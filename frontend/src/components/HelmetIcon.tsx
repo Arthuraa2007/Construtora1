@@ -1,4 +1,3 @@
-import * as React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 
 export default function HelmetIcon(props: SvgIconProps) {

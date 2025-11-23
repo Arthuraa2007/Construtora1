@@ -14,7 +14,6 @@ import {
   InputAdornment, // ⬅️ Novo: Para o Adorno do input
 } from "@mui/material";
 import {
-  Login as LoginIcon,
   Visibility, // ⬅️ Novo: Ícone
   VisibilityOff, // ⬅️ Novo: Ícone
 } from "@mui/icons-material";

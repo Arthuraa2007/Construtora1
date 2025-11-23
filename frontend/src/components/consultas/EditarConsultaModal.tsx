@@ -153,7 +153,7 @@ export const EditarConsultaModal = ({
             >
               {pacientes.map((paciente) => (
                 <MenuItem key={paciente.id} value={paciente.id}>
-                  {paciente.nome} - {paciente.imovel}
+                  {paciente.nome} - {paciente.cpf}
                 </MenuItem>
               ))}
             </TextField>
