@@ -54,8 +54,20 @@ export const deletePaciente = async (req: Request, res: Response) => {
     await pacienteService.remove(Number(req.params.id));
     return res.status(204).send();
   } catch (error: any) {
-    if (error.code === "P2025")
+
+    // Paciente não existe
+    if (error.code === "P2025") {
       return res.status(404).json({ message: "Paciente não encontrado" });
+    }
+
+    // Paciente tem consultas vinculadas
+    if (error.code === "P2003") {
+      return res.status(409).json({
+        message:
+          "Não é possível excluir o paciente porque existem consultas vinculadas a ele.",
+      });
+    }
+
     return res.status(500).json({ message: error.message });
   }
 };

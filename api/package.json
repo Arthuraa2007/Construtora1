@@ -8,13 +8,14 @@
     "build": "npx prisma generate && tsc && cp -r src/generated dist/",
     "start": "node dist/index.js",
     "prisma:generate": "npx prisma generate",
-    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:migrate": "npx prisma migrate deploy",
     "prisma:studio": "npx prisma studio",
     "seed": "npx tsx src/scripts/seedAll.ts",
     "seed:deploy": "npx prisma migrate deploy && npx tsx src/scripts/seedAll.ts",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "setup": "npm install && npm run prisma:generate && npm run prisma:migrate"
+    "setup": "npm install && npm run prisma:generate && npm run prisma:migrate",
+    "render:build": "npm install && npm run prisma:generate && npm run build"
   },
   "keywords": [
     "nodejs",
