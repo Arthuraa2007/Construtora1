@@ -76,8 +76,8 @@ export const EditarPacienteModal = ({
       setErrors({});
       onClose();
     } catch (error) {
-      console.error("Erro ao salvar paciente:", error);
-      setErrors({ submit: "Erro ao salvar paciente. Tente novamente." });
+      console.error("Erro ao salvar cliente:", error);
+      setErrors({ submit: "Erro ao salvar cliente. Tente novamente." });
     } finally {
       setSalvando(false);
     }
@@ -86,7 +86,7 @@ export const EditarPacienteModal = ({
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ fontWeight: 600, fontSize: "1.25rem" }}>
-        Editar Paciente
+        Editar Cliente
       </DialogTitle>
 
       <DialogContent>

@@ -59,7 +59,7 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
                 align="center"
                 className="py-6 text-gray-500"
               >
-                Nenhum paciente encontrado.
+                Nenhum cliente encontrado.
               </TableCell>
             </TableRow>
           ) : (

@@ -86,7 +86,7 @@ export const CriarPacienteModal = ({
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ fontWeight: 600, fontSize: "1.25rem" }}>
-        Cadastrar Novo Paciente
+        Cadastrar Novo Cliente
       </DialogTitle>
 
       <DialogContent>
