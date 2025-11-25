@@ -4,7 +4,7 @@ import { Express } from "express";
 
 const getServerUrl = () => {
   if (process.env.NODE_ENV === "production") {
-    return process.env.API_URL || "https://clinica-api.onrender.com";
+    return process.env.API_URL || "https://clinica-api-o2tf.onrender.com";
   }
   return "http://localhost:3333";
 };
