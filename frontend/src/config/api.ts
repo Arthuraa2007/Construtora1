@@ -23,7 +23,7 @@ export const API_BASE_URL = getApiUrl();
 // URLs dos endpoints
 export const API_ENDPOINTS = {
   // Auth
-  LOGIN: `${API_BASE_URL}/login`,
+  LOGIN: `${API_BASE_URL}/secretarios`,
 
   // Médicos
   MEDICOS: `${API_BASE_URL}/medicos`,
