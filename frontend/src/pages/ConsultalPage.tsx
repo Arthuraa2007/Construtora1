@@ -79,14 +79,14 @@ export const ConsultasPage = () => {
       setConsultas((prev) => prev.filter((c) => c.id !== id));
       setSnackbar({
         open: true,
-        message: "Consulta removida com sucesso.",
+        message: "Imóvel removido com sucesso.",
         severity: "success",
       });
     } catch (error) {
-      console.error("Erro ao excluir consulta:", error);
+      console.error("Erro ao excluir imóvel:", error);
       setSnackbar({
         open: true,
-        message: "Erro ao deletar consulta.",
+        message: "Erro ao deletar imóvel.",
         severity: "error",
       });
     } finally {
@@ -139,14 +139,14 @@ export const ConsultasPage = () => {
         await carregarConsultas();
         setSnackbar({
           open: true,
-          message: "Consulta cadastrada com sucesso.",
+          message: "Imóvel cadastrado com sucesso.",
           severity: "success",
         });
       } catch (error) {
-        console.error("Erro ao criar consulta:", error);
+        console.error("Erro ao criar imóvel:", error);
         setSnackbar({
           open: true,
-          message: "Erro ao criar consulta.",
+          message: "Erro ao criar imóvel.",
           severity: "error",
         });
         throw error;

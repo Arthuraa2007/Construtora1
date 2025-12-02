@@ -127,7 +127,7 @@ export const CriarConsultaModal = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Novo Móvel</DialogTitle>
+      <DialogTitle>Novo Imóvel</DialogTitle>
       <DialogContent>
         {loadingData ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 4, mt: 2 }}>

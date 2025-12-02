@@ -70,8 +70,8 @@ export const CriarPacienteModal = ({
       setErrors({});
       onClose();
     } catch (error) {
-      console.error("Erro ao criar paciente:", error);
-      setErrors({ submit: "Erro ao criar paciente. Tente novamente." });
+      console.error("Erro ao criar cliente:", error);
+      setErrors({ submit: "Erro ao criar cliente. Tente novamente." });
     } finally {
       setSalvando(false);
     }

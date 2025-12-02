@@ -68,7 +68,7 @@ export const PacientesPage = () => {
       setPacientes((prev) => prev.filter((p) => p.id !== id));
       setSnackbar({
         open: true,
-        message: "Paciente removido com sucesso.",
+        message: "Cliente removido com sucesso.",
         severity: "success",
       });
     } catch (error) {
@@ -97,7 +97,7 @@ export const PacientesPage = () => {
     );
     setSnackbar({
       open: true,
-      message: "Paciente atualizado com sucesso.",
+      message: "Cliente atualizado com sucesso.",
       severity: "success",
     });
   }, []);
@@ -106,7 +106,7 @@ export const PacientesPage = () => {
     setPacientes((prev) => [...prev, novoPaciente]);
     setSnackbar({
       open: true,
-      message: "Paciente cadastrado com sucesso.",
+      message: "Cliente cadastrado com sucesso.",
       severity: "success",
     });
   }, []);
@@ -214,7 +214,7 @@ export const PacientesPage = () => {
             className="uppercase font-bold"
             onClick={() => setAbrirModalCriar(true)}
           >
-            Novo Paciente
+            Novo Cliente
           </Button>
         </Box>
 

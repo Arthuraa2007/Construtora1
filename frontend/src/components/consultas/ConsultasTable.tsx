@@ -45,7 +45,7 @@ export const ConsultasTable = ({
     "Cliente",
     "CPF",
     "Atendente",
-    "Pagamento",
+    "Cargo",
     "Tipo de imóvel",
     "Ações",
   ];
