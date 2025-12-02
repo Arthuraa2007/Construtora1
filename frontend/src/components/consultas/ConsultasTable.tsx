@@ -89,7 +89,7 @@ export const ConsultasTable = ({
                 align="center"
                 className="py-6 text-gray-500"
               >
-                Nenhuma consulta encontrada.
+                Nenhum Imóvel encontrado.
               </TableCell>
             </TableRow>
           ) : (
