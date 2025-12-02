@@ -13,9 +13,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API de Consultório Médico",
+      title: "API da Construtora",
       version: "1.0.0",
-      description: "API para gerenciar consultas, médicos, pacientes e secretários",
+      description: "API para gerenciar imóveis, corretores, clientes e secretários",
     },
     servers: [
       {

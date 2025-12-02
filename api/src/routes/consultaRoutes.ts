@@ -18,16 +18,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Consultas
- *   description: Gerenciamento de Consultas
+ *   name: Imovel
+ *   description: Gerenciamento de Imovéis
  */
 
 /**
  * @swagger
  * /consultas:
  *   post:
- *     summary: Cria uma nova consulta
- *     tags: [Consultas]
+ *     summary: Cria um novo imovel
+ *     tags: [Imovel]
  *     requestBody:
  *       required: true
  *       content:
@@ -48,7 +48,7 @@ const router = Router();
  *                 type: integer
  *     responses:
  *       201:
- *         description: Consulta criada com sucesso
+ *         description: Imovel criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
@@ -60,11 +60,11 @@ router.post("/consultas", validateBody(createConsultaSchema), createConsulta);
  * @swagger
  * /consultas:
  *   get:
- *     summary: Retorna todas as consultas
- *     tags: [Consultas]
+ *     summary: Retorna todas os imoveis
+ *     tags: [Imovel]
  *     responses:
  *       200:
- *         description: Lista de consultas
+ *         description: Lista de imoveis
  *       500:
  *         description: Erro interno do servidor
  */
@@ -74,8 +74,8 @@ router.get("/consultas", getAllConsultas);
  * @swagger
  * /consultas/{id}:
  *   get:
- *     summary: Retorna uma consulta pelo ID
- *     tags: [Consultas]
+ *     summary: Retorna um imovel pelo ID
+ *     tags: [Imovel]
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,9 +84,9 @@ router.get("/consultas", getAllConsultas);
  *           type: integer
  *     responses:
  *       200:
- *         description: Consulta encontrada
+ *         description: Imovel encontrado
  *       404:
- *         description: Consulta não encontrada
+ *         description: Imovel não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
@@ -96,8 +96,8 @@ router.get("/consultas/:id", validateParams(idParamSchema), getConsultaById);
  * @swagger
  * /consultas/{id}:
  *   put:
- *     summary: Atualiza uma consulta
- *     tags: [Consultas]
+ *     summary: Atualiza um imovel
+ *     tags: [Imovel]
  *     parameters:
  *       - in: path
  *         name: id
@@ -116,11 +116,11 @@ router.get("/consultas/:id", validateParams(idParamSchema), getConsultaById);
  *                 format: date-time
  *     responses:
  *       200:
- *         description: Consulta atualizada com sucesso
+ *         description: Imovel atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Consulta não encontrada
+ *         description: Imovel não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
@@ -135,8 +135,8 @@ router.put(
  * @swagger
  * /consultas/{id}:
  *   delete:
- *     summary: Deleta uma consulta
- *     tags: [Consultas]
+ *     summary: Deleta um imovel
+ *     tags: [Imovel]
  *     parameters:
  *       - in: path
  *         name: id
@@ -145,9 +145,9 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Consulta deletada com sucesso
+ *         description: Imovel deletado com sucesso
  *       404:
- *         description: Consulta não encontrada
+ *         description: Imovel não encontrado
  *       500:
  *         description: Erro interno do servidor
  */

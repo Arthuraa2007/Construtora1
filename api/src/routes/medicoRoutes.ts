@@ -17,16 +17,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Medicos
- *   description: Gerenciamento de Médicos
+ *   name: Atendentes
+ *   description: Gerenciamento de Atendentes
  */
 
 /**
  * @swagger
  * /medicos:
  *   post:
- *     summary: Cria um novo médico
- *     tags: [Medicos]
+ *     summary: Cria um novo atendente
+ *     tags: [Atendentes]
  *     requestBody:
  *       required: true
  *       content:
@@ -48,7 +48,7 @@ const router = Router();
  *                 type: string
  *     responses:
  *       201:
- *         description: Médico criado com sucesso
+ *         description: Atendente criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
@@ -60,11 +60,11 @@ router.post("/medicos", validateBody(createMedicoSchema), createMedico);
  * @swagger
  * /medicos:
  *   get:
- *     summary: Retorna todos os médicos
- *     tags: [Medicos]
+ *     summary: Retorna todos os atendentes
+ *     tags: [Atendentes]
  *     responses:
  *       200:
- *         description: Lista de médicos
+ *         description: Lista de Atendentes
  *       500:
  *         description: Erro interno do servidor
  */
@@ -74,8 +74,8 @@ router.get("/medicos", getAllMedicos);
  * @swagger
  * /medicos/{id}:
  *   get:
- *     summary: Retorna um médico pelo ID
- *     tags: [Medicos]
+ *     summary: Retorna um atendente pelo ID
+ *     tags: [Atendentes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,9 +84,9 @@ router.get("/medicos", getAllMedicos);
  *           type: integer
  *     responses:
  *       200:
- *         description: Médico encontrado
+ *         description: Atendente encontrado
  *       404:
- *         description: Médico não encontrado
+ *         description: Atendente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
@@ -96,8 +96,8 @@ router.get("/medicos/:id", validateParams(idParamSchema), getMedicoById);
  * @swagger
  * /medicos/{id}:
  *   put:
- *     summary: Atualiza um médico
- *     tags: [Medicos]
+ *     summary: Atualiza um atendente
+ *     tags: [Atendentes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -121,11 +121,11 @@ router.get("/medicos/:id", validateParams(idParamSchema), getMedicoById);
  *                 type: string
  *     responses:
  *       200:
- *         description: Médico atualizado com sucesso
+ *         description: Atendente atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Médico não encontrado
+ *         description: Atendente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
@@ -140,8 +140,8 @@ router.put(
  * @swagger
  * /medicos/{id}:
  *   delete:
- *     summary: Deleta um médico
- *     tags: [Medicos]
+ *     summary: Deleta um atendente
+ *     tags: [Atendentes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,9 +150,9 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Médico deletado com sucesso
+ *         description: Atendente deletado com sucesso
  *       404:
- *         description: Médico não encontrado
+ *         description: Atendente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */

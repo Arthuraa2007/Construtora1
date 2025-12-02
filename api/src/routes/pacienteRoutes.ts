@@ -18,16 +18,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Pacientes
- *   description: Gerenciamento de Pacientes
+ *   name: Clientes
+ *   description: Gerenciamento de Clientes
  */
 
 /**
  * @swagger
  * /pacientes:
  *   post:
- *     summary: Cria um novo paciente
- *     tags: [Pacientes]
+ *     summary: Cria um novo cliente
+ *     tags: [Clientes]
  *     requestBody:
  *       required: true
  *       content:
@@ -64,11 +64,11 @@ router.post("/pacientes", validateBody(createPacienteSchema), createPaciente);
  * @swagger
  * /pacientes:
  *   get:
- *     summary: Retorna todos os pacientes
- *     tags: [Pacientes]
+ *     summary: Retorna todos os clientes
+ *     tags: [Clientes]
  *     responses:
  *       200:
- *         description: Lista de pacientes
+ *         description: Lista de clientes
  *       500:
  *         description: Erro interno do servidor
  */
@@ -78,8 +78,8 @@ router.get("/pacientes", getAllPacientes);
  * @swagger
  * /pacientes/{id}:
  *   get:
- *     summary: Retorna um paciente pelo ID
- *     tags: [Pacientes]
+ *     summary: Retorna um cliente pelo ID
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,9 +88,9 @@ router.get("/pacientes", getAllPacientes);
  *           type: integer
  *     responses:
  *       200:
- *         description: Paciente encontrado
+ *         description: Cliente encontrado
  *       404:
- *         description: Paciente não encontrado
+ *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
@@ -100,8 +100,8 @@ router.get("/pacientes/:id", validateParams(idParamSchema), getPacienteById);
  * @swagger
  * /pacientes/{id}:
  *   put:
- *     summary: Atualiza um paciente
- *     tags: [Pacientes]
+ *     summary: Atualiza um cliente
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -123,7 +123,7 @@ router.get("/pacientes/:id", validateParams(idParamSchema), getPacienteById);
  *                 type: string
  *     responses:
  *       200:
- *         description: Paciente atualizado com sucesso
+ *         description: Cliente atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
@@ -142,8 +142,8 @@ router.put(
  * @swagger
  * /pacientes/{id}:
  *   delete:
- *     summary: Deleta um paciente
- *     tags: [Pacientes]
+ *     summary: Deleta um cliente
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -152,9 +152,9 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Paciente deletado com sucesso
+ *         description: Cliente deletado com sucesso
  *       404:
- *         description: Paciente não encontrado
+ *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
