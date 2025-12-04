@@ -1,13 +1,26 @@
 import { prisma } from "../database/prisma";
-import { Consulta } from "../generated/prisma";
+import type { Consulta } from "../generated/prisma";
 
-// 🔹 Tipos auxiliares
-type ConsultaCreateData = Omit<Consulta, "id" | "createdAt" | "updatedAt">;
-type ConsultaUpdateData = Partial<
-  Omit<Consulta, "id" | "createdAt" | "updatedAt" | "pacienteId" | "medicoId">
->;
+// ---------------------------------------------
+// 🔹 TYPES CORRETOS
+// ---------------------------------------------
+type ConsultaCreateData = {
+  dataHora: string;
+  motivo?: string | null;
+  pacienteId: number;
+  medicoId: number;
+  imovelId: number | null;
+};
 
-// 🔹 Criar consulta
+type ConsultaUpdateData = Partial<{
+  dataHora: string;
+  motivo?: string | null;
+  imovelId: number | null;
+}>;
+
+// ---------------------------------------------
+// 🔹 CREATE
+// ---------------------------------------------
 export const create = async (data: ConsultaCreateData): Promise<Consulta> => {
   const { pacienteId, medicoId, imovelId } = data;
 
@@ -19,18 +32,21 @@ export const create = async (data: ConsultaCreateData): Promise<Consulta> => {
   const medico = await prisma.medico.findUnique({ where: { id: medicoId } });
   if (!medico) throw new Error("Médico não encontrado");
 
-  // valida imóvel APENAS SE vier no body
-  if (imovelId !== null && imovelId !== undefined) {
-    const imovel = await prisma.imovel.findUnique({ where: { id: imovelId } });
-    if (!imovel) throw new Error("Imóvel não encontrado");
+  // valida imóvel obrigatório
+  if (imovelId === null || imovelId === undefined) {
+    throw new Error("O imóvel deve ser informado");
   }
 
-  // cria consulta
+  const imovel = await prisma.imovel.findUnique({ where: { id: imovelId } });
+  if (!imovel) throw new Error("Imóvel não encontrado");
+
   return prisma.consulta.create({
     data: {
-      ...data,
       dataHora: new Date(data.dataHora),
-      imovelId: imovelId ?? null, // garante null quando não enviado
+      motivo: data.motivo ?? null,
+      pacienteId,
+      medicoId,
+      imovelId,
     },
     include: {
       paciente: { select: { nome: true, cpf: true } },
@@ -40,7 +56,9 @@ export const create = async (data: ConsultaCreateData): Promise<Consulta> => {
   });
 };
 
-// 🔹 Listar todas as consultas
+// ---------------------------------------------
+// 🔹 GET ALL
+// ---------------------------------------------
 export const getAll = async () => {
   return prisma.consulta.findMany({
     include: {
@@ -52,7 +70,9 @@ export const getAll = async () => {
   });
 };
 
-// 🔹 Buscar consulta por ID
+// ---------------------------------------------
+// 🔹 GET BY ID
+// ---------------------------------------------
 export const getById = async (id: number) => {
   return prisma.consulta.findUnique({
     where: { id },
@@ -64,27 +84,33 @@ export const getById = async (id: number) => {
   });
 };
 
-// 🔹 Atualizar consulta
+// ---------------------------------------------
+// 🔹 UPDATE
+// ---------------------------------------------
 export const update = async (
   id: number,
   data: ConsultaUpdateData
 ): Promise<Consulta> => {
   const updateData: any = {
-    ...data,
-    dataHora: data.dataHora ? new Date(data.dataHora) : undefined,
+    motivo: data.motivo ?? undefined,
   };
 
-  // permitir imovelId = null (remover imóvel)
-  if (data.imovelId === null) {
-    updateData.imovelId = null;
+  // Atualizar dataHora
+  if (data.dataHora) {
+    updateData.dataHora = new Date(data.dataHora);
   }
 
-  // se enviar um imóvel novo, validar
-  if (data.imovelId !== undefined && data.imovelId !== null) {
-    const imovel = await prisma.imovel.findUnique({
-      where: { id: data.imovelId },
-    });
-    if (!imovel) throw new Error("Imóvel não encontrado");
+  // Atualizar imovelId (pode ser null para remover)
+  if (data.imovelId !== undefined) {
+    if (data.imovelId === null) {
+      updateData.imovelId = null;
+    } else {
+      const imovel = await prisma.imovel.findUnique({
+        where: { id: data.imovelId },
+      });
+      if (!imovel) throw new Error("Imóvel não encontrado");
+      updateData.imovelId = data.imovelId;
+    }
   }
 
   return prisma.consulta.update({
@@ -98,7 +124,9 @@ export const update = async (
   });
 };
 
-// 🔹 Remover consulta
+// ---------------------------------------------
+// 🔹 DELETE
+// ---------------------------------------------
 export const remove = async (id: number): Promise<Consulta> => {
   return prisma.consulta.delete({
     where: { id },

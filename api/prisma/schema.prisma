@@ -50,6 +50,7 @@ model Medico {
 model Consulta {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
+  motivo     String? 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

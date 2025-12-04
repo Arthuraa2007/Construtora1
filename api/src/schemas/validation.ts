@@ -89,6 +89,7 @@ export const createPacienteSchema = z.object({
 export const updatePacienteSchema = createPacienteSchema.partial();
 
 // Schema para Consulta
+// Schema para Consulta
 export const createConsultaSchema = z.object({
   dataHora: z
     .string()
@@ -101,15 +102,26 @@ export const createConsultaSchema = z.object({
       const now = new Date();
       return parsedDate > now;
     }, "Data e hora da consulta devem ser no futuro"),
+
   pacienteId: z
     .number()
     .int("ID do paciente deve ser um número inteiro")
     .positive("ID do paciente deve ser positivo"),
+
   medicoId: z
     .number()
     .int("ID do médico deve ser um número inteiro")
     .positive("ID do médico deve ser positivo"),
-  motivo: z.string().max(500, "Motivo deve ter no máximo 500 caracteres").optional(),
+
+  imovelId: z
+    .number()
+    .int("ID do imóvel deve ser um número inteiro")
+    .positive("ID do imóvel deve ser positivo"),
+
+  motivo: z
+    .string()
+    .max(500, "Motivo deve ter no máximo 500 caracteres")
+    .optional(),
 });
 
 export const updateConsultaSchema = createConsultaSchema.partial();
