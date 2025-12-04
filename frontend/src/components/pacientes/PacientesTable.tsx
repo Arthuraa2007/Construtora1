@@ -7,17 +7,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
+  Button,
   Tooltip,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface PacientesTableProps {
   pacientes: Paciente[];
   deletingId: number | null;
   onDelete: (id: number) => void;
-  onEdit: (paciente: Paciente) => void; // Nova função para editar
+  onEdit: (paciente: Paciente) => void;
 }
 
 const PacientesTable: React.FC<PacientesTableProps> = ({
@@ -36,15 +34,21 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
   ];
 
   return (
-    <TableContainer className="mt-4 rounded-lg">
+    <TableContainer
+      sx={{
+        mt: 4,
+        borderRadius: "12px",
+        boxShadow: "0px 6px 20px rgba(255, 111, 0, 0.25)",
+      }}
+    >
       <Table>
         <TableHead>
-          <TableRow className="bg-gray-800">
+          <TableRow sx={{ bgcolor: "#FF9800" }}>
             {colunas.map((coluna) => (
               <TableCell
                 key={coluna}
                 align="center"
-                className="font-bold text-white"
+                sx={{ color: "#fff", fontWeight: 600 }}
               >
                 {coluna}
               </TableCell>
@@ -57,14 +61,20 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
               <TableCell
                 colSpan={6}
                 align="center"
-                className="py-6 text-gray-500"
+                sx={{ py: 6, color: "text.secondary" }}
               >
                 Nenhum cliente encontrado.
               </TableCell>
             </TableRow>
           ) : (
             pacientes.map((paciente) => (
-              <TableRow key={paciente.id} hover className="hover:bg-blue-50">
+              <TableRow
+                key={paciente.id}
+                hover
+                sx={{
+                  "&:hover": { bgcolor: "#FFF3E0" }, // hover suave em laranja claro
+                }}
+              >
                 <TableCell align="center">{paciente.nome}</TableCell>
                 <TableCell align="center">{paciente.email}</TableCell>
                 <TableCell align="center">{paciente.telefone || "-"}</TableCell>
@@ -73,26 +83,46 @@ const PacientesTable: React.FC<PacientesTableProps> = ({
                   {paciente.dataNascimento?.split("T")[0] || "-"}
                 </TableCell>
                 <TableCell align="center">
-                  <div className="flex justify-center gap-2">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column", // botões em coluna
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
                     <Tooltip title="Editar">
-                      <IconButton
-                        color="primary"
+                      <Button
+                        variant="contained"
                         size="small"
-                        onClick={() => onEdit(paciente)} // Clicar = abrir modal de edição
+                        sx={{
+                          bgcolor: "#FB8C00", // laranja para editar
+                          color: "#fff",
+                          fontWeight: 600,
+                          "&:hover": { bgcolor: "#EF6C00" },
+                          width: "90px",
+                        }}
+                        onClick={() => onEdit(paciente)}
                       >
-                        <EditIcon />
-                      </IconButton>
+                        Editar
+                      </Button>
                     </Tooltip>
-                    <Tooltip title="Remover">
-                      <IconButton
-                        color="error"
+                    <Tooltip title="Excluir">
+                      <Button
+                        variant="contained"
                         size="small"
+                        sx={{
+                          bgcolor: "#E65100", // vermelho-alaranjado para excluir
+                          color: "#fff",
+                          fontWeight: 600,
+                          "&:hover": { bgcolor: "#BF360C" },
+                          width: "90px",
+                        }}
                         onClick={() => onDelete(paciente.id)}
                         disabled={deletingId === paciente.id}
-                        aria-label={`remover-${paciente.id}`}
                       >
-                        <DeleteIcon />
-                      </IconButton>
+                        Excluir
+                      </Button>
                     </Tooltip>
                   </div>
                 </TableCell>

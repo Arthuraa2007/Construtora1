@@ -214,164 +214,208 @@ export const ConsultasPage = () => {
   }, [consultas, debouncedSearchTerm, filtroData]);
 
   return (
+   <Box
+  display="flex"
+  flexDirection="column"
+  alignItems="center"
+  minHeight="100vh"
+  bgcolor="background.default"
+  p={3}
+>
+  <Paper
+    elevation={4}
+    sx={{
+      width: "100%",
+      maxWidth: 1400,
+      p: 3,
+      position: "relative",
+      borderRadius: "12px",
+      background: "linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)", // fundo suave em laranja
+      boxShadow: "0px 6px 20px rgba(255, 111, 0, 0.25)",
+      "&::before": {
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundImage:
+          "url('https://png.pngtree.com/thumb_back/fw800/background/20240611/pngtree-construction-cranes-and-building-silhouettes-image_15747530.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        filter: "brightness(0.85)",
+        transform: "scale(1.12)",
+        zIndex: -1,
+      },
+    }}
+  >
+    <IconButton
+      aria-label="voltar"
+      onClick={() => navigate("/home")}
+      size="small"
+      sx={{
+        position: "absolute",
+        left: 16,
+        top: 16,
+        color: "#E65100",
+        "&:hover": { bgcolor: "#FFE0B2" },
+      }}
+    >
+      <ArrowBackIcon fontSize="small" />
+    </IconButton>
+
+    <Typography
+      variant="h5"
+      fontWeight={700}
+      mb={3}
+      textAlign="center"
+      sx={{ color: "#E65100" }}
+    >
+      Gerenciar Imóveis
+    </Typography>
+
+    {/* Barra de busca e filtro */}
     <Box
       display="flex"
-      flexDirection="column"
-      alignItems="center"
-      minHeight="100vh"
-      bgcolor="background.default"
-      p={3}
+      gap={2}
+      mb={3}
+      flexDirection={{ xs: "column", md: "row" }}
     >
-      <Paper
-        elevation={3}
-        sx={(theme) => ({
-          width: "100%",
-          maxWidth: 1400,
-          p: 3,
-          position: "relative",
-          bgcolor:
-            theme.palette.mode === "dark" ? "#242424" : "background.paper",
-          color: theme.palette.text.primary,
-          borderRadius: 2,
-           "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url('https://png.pngtree.com/thumb_back/fw800/background/20240611/pngtree-construction-cranes-and-building-silhouettes-image_15747530.jpg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  filter: "brightness(0.85)",
-                  transform: "scale(1.12)",
-                  zIndex: -1,
-      },
-          
-  })}
-      >
-        <IconButton
-          aria-label="voltar"
-          onClick={() => navigate("/home")}
+      <Box flex={1}>
+        <TextField
+          fullWidth
+          placeholder="Buscar por imóveis..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: "#FF6F00" }} />
+              </InputAdornment>
+            ),
+          }}
           size="small"
-          sx={{ position: "absolute", left: 16, top: 16 }}
-        >
-          <ArrowBackIcon fontSize="small" />
-        </IconButton>
-
-        <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
-          Gerenciar Imóveis
-        </Typography>
-
-        <Box
-          display="flex"
-          gap={2}
-          mb={3}
-          flexDirection={{ xs: "column", md: "row" }}
-        >
-          <Box flex={1}>
-            <TextField
-              fullWidth
-              placeholder="Buscar por imóveis..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-              size="small"
-            />
-          </Box>
-          <Box width={{ xs: "100%", md: 300 }}>
-            <TextField
-              select
-              fullWidth
-              label="Filtrar por período"
-              value={filtroData}
-              onChange={(e) => setFiltroData(e.target.value)}
-              size="small"
-            >
-              <MenuItem value="">Todas</MenuItem>
-              <MenuItem value="hoje">Hoje</MenuItem>
-              <MenuItem value="semana">Próximos 7 dias</MenuItem>
-              <MenuItem value="mes">Este mês</MenuItem>
-              <MenuItem value="futuras">Futuras</MenuItem>
-              <MenuItem value="passadas">Passadas</MenuItem>
-            </TextField>
-          </Box>
-        </Box>
-
-        {(debouncedSearchTerm || filtroData) && (
-          <Box mb={2} display="flex" alignItems="center" gap={1}>
-            <Typography variant="body2" color="text.secondary">
-              Resultados encontrados:
-            </Typography>
-            <Chip
-              label={consultasFiltradas.length}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-            {consultasFiltradas.length !== consultas.length && (
-              <Typography variant="body2" color="text.secondary">
-                de {consultas.length} total
-              </Typography>
-            )}
-          </Box>
-        )}
-
-        <ConsultasTable
-          consultas={consultasFiltradas}
-          deletingId={deletingId}
-          onDelete={handleDelete}
-          onEdit={handleOpenEditModal}
-          loading={loading}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              "& fieldset": { borderColor: "#FF9800" },
+              "&:hover fieldset": { borderColor: "#F57C00" },
+              "&.Mui-focused fieldset": { borderColor: "#E65100" },
+            },
+          }}
         />
-
-        <Box mt={3} display="flex" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="primary"
-            className="uppercase font-bold"
-            onClick={() => setModalCriarOpen(true)}
-          >
-            Cadastrar Novo imóvel
-          </Button>
-        </Box>
-
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={4000}
-          onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      </Box>
+      <Box width={{ xs: "100%", md: 300 }}>
+        <TextField
+          select
+          fullWidth
+          label="Filtrar por período"
+          value={filtroData}
+          onChange={(e) => setFiltroData(e.target.value)}
+          size="small"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              "& fieldset": { borderColor: "#FF9800" },
+              "&:hover fieldset": { borderColor: "#F57C00" },
+              "&.Mui-focused fieldset": { borderColor: "#E65100" },
+            },
+          }}
         >
-          <Alert
-            onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
-            severity={snackbar.severity}
-            sx={{ width: "100%" }}
-          >
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
-      </Paper>
-
-      <CriarConsultaModal
-        open={modalCriarOpen}
-        onClose={() => setModalCriarOpen(false)}
-        onSave={handleSucessoCriarConsulta}
-      />
-
-      <EditarConsultaModal
-        open={modalEditarOpen}
-        onClose={handleCloseEditModal}
-        onSave={handleSaveEdit}
-        consulta={consultaSelecionada}
-      />
+          <MenuItem value="">Todas</MenuItem>
+          <MenuItem value="hoje">Hoje</MenuItem>
+          <MenuItem value="semana">Próximos 7 dias</MenuItem>
+          <MenuItem value="mes">Este mês</MenuItem>
+          <MenuItem value="futuras">Futuras</MenuItem>
+          <MenuItem value="passadas">Passadas</MenuItem>
+        </TextField>
+      </Box>
     </Box>
+
+    {/* Resultados */}
+    {(debouncedSearchTerm || filtroData) && (
+      <Box mb={2} display="flex" alignItems="center" gap={1}>
+        <Typography variant="body2" color="text.secondary">
+          Resultados encontrados:
+        </Typography>
+        <Chip
+          label={consultasFiltradas.length}
+          size="small"
+          sx={{
+            bgcolor: "#FFB74D",
+            color: "#fff",
+            fontWeight: 600,
+          }}
+        />
+        {consultasFiltradas.length !== consultas.length && (
+          <Typography variant="body2" color="text.secondary">
+            de {consultas.length} total
+          </Typography>
+        )}
+      </Box>
+    )}
+
+    {/* Tabela de consultas */}
+    <ConsultasTable
+      consultas={consultasFiltradas}
+      deletingId={deletingId}
+      onDelete={handleDelete}
+      onEdit={handleOpenEditModal}
+      loading={loading}
+    />
+
+    {/* Botão Novo Imóvel */}
+    <Box mt={3} display="flex" justifyContent="flex-end">
+      <Button
+        variant="contained"
+        sx={{
+          bgcolor: "linear-gradient(135deg, #FF6F00 0%, #FF8F00 100%)",
+          color: "#fff",
+          fontWeight: 600,
+          borderRadius: "8px",
+          boxShadow: "0px 4px 12px rgba(255, 111, 0, 0.4)",
+          "&:hover": {
+            bgcolor: "linear-gradient(135deg, #E65100 0%, #F57C00 100%)",
+            boxShadow: "0px 6px 16px rgba(255, 111, 0, 0.6)",
+          },
+        }}
+        onClick={() => setModalCriarOpen(true)}
+      >
+        Cadastrar Novo Imóvel
+      </Button>
+    </Box>
+
+    {/* Snackbar */}
+    <Snackbar
+      open={snackbar.open}
+      autoHideDuration={4000}
+      onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <Alert
+        onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
+        severity={snackbar.severity}
+        sx={{ width: "100%" }}
+      >
+        {snackbar.message}
+      </Alert>
+    </Snackbar>
+  </Paper>
+
+  {/* Modais */}
+  <CriarConsultaModal
+    open={modalCriarOpen}
+    onClose={() => setModalCriarOpen(false)}
+    onSave={handleSucessoCriarConsulta}
+  />
+
+  <EditarConsultaModal
+    open={modalEditarOpen}
+    onClose={handleCloseEditModal}
+    onSave={handleSaveEdit}
+    consulta={consultaSelecionada}
+  />
+</Box>
+
   );
 };

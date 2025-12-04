@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { useState } from "react";
 import PacientesPage from "./pages/PacientesPage";
 import { ConsultasPage } from "./pages/ConsultalPage";
-
+import ImoveisPage from "./pages/ImoveisPage"; // ou CadastroImoveisPage
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const theme = createTheme({ palette: { mode } });
@@ -24,6 +24,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/pacientes" element={<PacientesPage />} />
           <Route path="/consultas" element={<ConsultasPage />} />
+          <Route path="/cadastro-imoveis" element={<ImoveisPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

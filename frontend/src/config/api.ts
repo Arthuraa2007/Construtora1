@@ -33,4 +33,7 @@ export const API_ENDPOINTS = {
 
   // Consultas
   CONSULTAS: `${API_BASE_URL}/consultas`,
+
+  // ✅ Novo endpoint para Imóveis
+  IMOVEIS: `${API_BASE_URL}/cadastro-imoveis`,
 };

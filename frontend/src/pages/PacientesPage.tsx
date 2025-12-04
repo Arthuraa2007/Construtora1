@@ -137,86 +137,130 @@ export const PacientesPage = () => {
       bgcolor="background.default"
       p={3}
     >
-      <Paper
-        elevation={3}
-        sx={(theme) => ({
-          width: "100%",
-          maxWidth: 1000,
-          p: 3,
-          position: "relative",
-          bgcolor:
-            theme.palette.mode === "dark" ? "#242424" : "background.paper",
-          color: theme.palette.text.primary,
-          borderRadius: 2,
-        })}
-      >
-        <IconButton
-          aria-label="voltar"
-          onClick={() => navigate("/home")}
-          size="small"
-          sx={{ position: "absolute", left: 16, top: 16 }}
-        >
-          <ArrowBackIcon fontSize="small" />
-        </IconButton>
+     <Paper
+  elevation={4}
+  sx={{
+    width: "100%",
+    maxWidth: 1000,
+    p: 3,
+    position: "relative",
+    borderRadius: "12px",
+    background: "linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)", // fundo suave em laranja
+    boxShadow: "0px 6px 20px rgba(255, 111, 0, 0.25)",
+  }}
+>
+  <IconButton
+    aria-label="voltar"
+    onClick={() => navigate("/home")}
+    size="small"
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: 16,
+      color: "#E65100",
+      "&:hover": { bgcolor: "#FFE0B2" },
+    }}
+  >
+    <ArrowBackIcon fontSize="small" />
+  </IconButton>
 
-        <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
-          Lista de Clientes
+  <Typography
+    variant="h5"
+    fontWeight={700}
+    mb={3}
+    textAlign="center"
+    sx={{ color: "#E65100" }}
+  >
+    Lista de Clientes
+  </Typography>
+
+  {/* Campo de busca estilizado */}
+  <TextField
+    fullWidth
+    placeholder="Buscar por nome, email, CPF ou telefone..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon sx={{ color: "#FF6F00" }} />
+        </InputAdornment>
+      ),
+    }}
+    size="small"
+    sx={{
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "8px",
+        "& fieldset": { borderColor: "#FF9800" },
+        "&:hover fieldset": { borderColor: "#F57C00" },
+        "&.Mui-focused fieldset": { borderColor: "#E65100" },
+      },
+    }}
+  />
+
+  {/* Chip de resultados */}
+  {debouncedSearchTerm && (
+    <Box mt={1} display="flex" alignItems="center" gap={1}>
+      <Typography variant="body2" color="text.secondary">
+        Resultados encontrados:
+      </Typography>
+      <Chip
+        label={pacientesFiltrados.length}
+        size="small"
+        sx={{
+          bgcolor: "#FFB74D",
+          color: "#fff",
+          fontWeight: 600,
+        }}
+      />
+      {pacientesFiltrados.length !== pacientes.length && (
+        <Typography variant="body2" color="text.secondary">
+          de {pacientes.length} total
         </Typography>
+      )}
+    </Box>
+  )}
 
-        <Box mb={3}>
-          <TextField
-            fullWidth
-            placeholder="Buscar por nome, email, CPF ou telefone..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            size="small"
-          />
-          {debouncedSearchTerm && (
-            <Box mt={1} display="flex" alignItems="center" gap={1}>
-              <Typography variant="body2" color="text.secondary">
-                Resultados encontrados:
-              </Typography>
-              <Chip
-                label={pacientesFiltrados.length}
-                size="small"
-                color="primary"
-                variant="outlined"
-              />
-              {pacientesFiltrados.length !== pacientes.length && (
-                <Typography variant="body2" color="text.secondary">
-                  de {pacientes.length} total
-                </Typography>
-              )}
-            </Box>
-          )}
-        </Box>
+  {/* Tabela estilizada */}
+  <PacientesTable
+    pacientes={pacientesFiltrados}
+    deletingId={deletingId}
+    onDelete={handleDelete}
+    onEdit={handleOpenEditModal}
+    sx={{
+    "& thead": {
+      bgcolor: "#FF9800",
+    },
+    "& thead th": {
+      color: "#fff",
+      fontWeight: 600,
+    },
+    "& tbody tr:hover": {
+      bgcolor: "#FFF3E0",
+    },
+  }}
+  />
 
-        <PacientesTable
-          pacientes={pacientesFiltrados}
-          deletingId={deletingId}
-          onDelete={handleDelete}
-          onEdit={handleOpenEditModal}
-        />
-
-        <Box mt={3} display="flex" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="primary"
-            className="uppercase font-bold"
-            onClick={() => setAbrirModalCriar(true)}
-          >
-            Novo Cliente
-          </Button>
-        </Box>
+  {/* Botão Novo Cliente */}
+  <Box mt={3} display="flex" justifyContent="flex-end">
+    <Button
+      variant="contained"
+      sx={{
+        bgcolor: "linear-gradient(135deg, #FF6F00 0%, #FF8F00 100%)",
+        color: "#fff",
+        fontWeight: 600,
+        borderRadius: "8px",
+        boxShadow: "0px 4px 12px rgba(255, 111, 0, 0.4)",
+        "&:hover": {
+          bgcolor: "linear-gradient(135deg, #E65100 0%, #F57C00 100%)",
+          boxShadow: "0px 6px 16px rgba(255, 111, 0, 0.6)",
+        },
+      }}
+      onClick={() => setAbrirModalCriar(true)}
+    >
+      Novo Cliente
+    </Button>
+  </Box>
 
         <Snackbar
           open={snackbar.open}

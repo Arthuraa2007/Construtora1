@@ -16,6 +16,9 @@ import { getPacientes } from "../../services/pacienteService";
 import { getMedicos } from "../../services/medicoService";
 import type { Paciente } from "../../types/paciente";
 import type { Medico } from "../../types/medico";
+import { getImoveis } from "../../services/imovelService";
+import type { Imovel } from "../../types/imovel";
+
 
 interface CriarConsultaModalProps {
   open: boolean;
@@ -46,6 +49,8 @@ export const CriarConsultaModal = ({
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
   const [medicos, setMedicos] = useState<Medico[]>([]);
   const [loadingData, setLoadingData] = useState(false);
+  const [imoveis, setImoveis] = useState<Imovel[]>([]);
+
 
   useEffect(() => {
     if (open) {

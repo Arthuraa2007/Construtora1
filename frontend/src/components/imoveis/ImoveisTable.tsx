@@ -1,3 +1,5 @@
+import React from "react";
+import type { Imovel } from "../../types/imovel";
 import {
   Table,
   TableBody,
@@ -7,61 +9,29 @@ import {
   TableRow,
   Button,
   Tooltip,
-  CircularProgress,
-  Box,
 } from "@mui/material";
-import type { Consulta } from "../../types/consulta";
 
-interface ConsultasTableProps {
-  consultas: Consulta[];
+interface ImoveisTableProps {
+  imoveis: Imovel[];
   deletingId: number | null;
   onDelete: (id: number) => void;
-  onEdit: (consulta: Consulta) => void;
-  loading: boolean;
+  onEdit: (imovel: Imovel) => void;
 }
 
-export const ConsultasTable = ({
-  consultas,
+const ImoveisTable: React.FC<ImoveisTableProps> = ({
+  imoveis,
   deletingId,
   onDelete,
   onEdit,
-  loading,
-}: ConsultasTableProps) => {
-  const formatarDataHora = (dataHora: string) => {
-    const date = new Date(dataHora);
-    return date.toLocaleString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
+}) => {
   const colunas: string[] = [
-    "Data/Hora",
-    "Cliente",
-    "CPF",
-    "Atendente",
-    "Cargo",
-    "Imóvel",
+    "Nome",
+    "Endereço",
+    "Valor",
+    "Descrição",
+    "Data de Construção",
     "Ações",
   ];
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          py: 8,
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <TableContainer
@@ -86,48 +56,41 @@ export const ConsultasTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {consultas.length === 0 ? (
+          {imoveis.length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={6}
                 align="center"
                 sx={{ py: 6, color: "text.secondary" }}
               >
-                Nenhum Imóvel encontrado.
+                Nenhum imóvel encontrado.
               </TableCell>
             </TableRow>
           ) : (
-            consultas.map((consulta) => (
+            imoveis.map((imovel) => (
               <TableRow
-                key={consulta.id}
+                key={imovel.id}
                 hover
                 sx={{ "&:hover": { bgcolor: "#FFF3E0" } }}
               >
+                <TableCell align="center">{imovel.nome}</TableCell>
+                <TableCell align="center">{imovel.endereco}</TableCell>
                 <TableCell align="center">
-                  {formatarDataHora(consulta.dataHora)}
+                  R$ {imovel.valor.toFixed(2)}
+                </TableCell>
+                <TableCell align="center">{imovel.descricao || "-"}</TableCell>
+                <TableCell align="center">
+                  {imovel.dataConstrucao
+                    ? imovel.dataConstrucao.split("T")[0]
+                    : "-"}
                 </TableCell>
                 <TableCell align="center">
-                  {consulta.paciente?.nome || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.paciente?.cpf || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.medico?.nome || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.medico?.especialidade || "-"}
-        <TableCell align="center">
-  {consulta.imovel
-    ? `${consulta.imovel.nome} - ${consulta.imovel.endereco}`
-    : "-"}
-</TableCell>
-                  <Box
-                    sx={{
+                  <div
+                    style={{
                       display: "flex",
                       flexDirection: "column", // botões em coluna
                       alignItems: "center",
-                      gap: 1,
+                      gap: "8px",
                     }}
                   >
                     <Tooltip title="Editar">
@@ -141,7 +104,7 @@ export const ConsultasTable = ({
                           "&:hover": { bgcolor: "#EF6C00" },
                           width: "90px",
                         }}
-                        onClick={() => onEdit(consulta)}
+                        onClick={() => onEdit(imovel)}
                       >
                         Editar
                       </Button>
@@ -157,13 +120,13 @@ export const ConsultasTable = ({
                           "&:hover": { bgcolor: "#BF360C" },
                           width: "90px",
                         }}
-                        onClick={() => onDelete(consulta.id)}
-                        disabled={deletingId === consulta.id}
+                        onClick={() => onDelete(imovel.id)}
+                        disabled={deletingId === imovel.id}
                       >
                         Excluir
                       </Button>
                     </Tooltip>
-                  </Box>
+                  </div>
                 </TableCell>
               </TableRow>
             ))
@@ -173,3 +136,5 @@ export const ConsultasTable = ({
     </TableContainer>
   );
 };
+
+export default ImoveisTable;

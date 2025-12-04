@@ -1,9 +1,12 @@
+import type { Imovel } from "./imovel";
+
 export interface Consulta {
   id: number;
   dataHora: string;
-  motivo?: string;
   pacienteId: number;
   medicoId: number;
+  imovelId: number; // 🔹 referência ao imóvel escolhido
+
   paciente?: {
     nome: string;
     cpf: string;
@@ -12,4 +15,5 @@ export interface Consulta {
     nome: string;
     especialidade: string;
   };
+  imovel?: Imovel; // 🔹 objeto completo do imóvel (opcional)
 }

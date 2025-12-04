@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createPacienteSchema, updatePacienteSchema } from "./pacienteSchema";
 import { loginSchema } from "./loginSchema";
 import { createConsultaSchema, updateConsultaSchema } from "./consultaSchema";
+import { createImovelSchema, updateImovelSchema } from "./imovelSchema";
 
 export const validateCreatePaciente = (data: unknown) => {
   try {
@@ -81,6 +82,38 @@ export const validateUpdateConsulta = (data: unknown) => {
       for (const issue of error.issues) {
         const key = String(issue.path[0]);
         errors[key] = issue.message;
+      }
+      return { success: false as const, errors };
+    }
+    throw error;
+  }
+};
+// 🔹 Validação para criação de Imóvel
+export const validateCreateImovel = (data: unknown) => {
+  try {
+    const validatedData = createImovelSchema.parse(data);
+    return { success: true as const, data: validatedData };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errors: Record<string, string> = {};
+      for (const issue of error.issues) {
+        errors[String(issue.path[0])] = issue.message;
+      }
+      return { success: false as const, errors };
+    }
+    throw error;
+  }
+};
+
+export const validateUpdateImovel = (data: unknown) => {
+  try {
+    const validatedData = updateImovelSchema.parse(data);
+    return { success: true as const, data: validatedData };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errors: Record<string, string> = {};
+      for (const issue of error.issues) {
+        errors[String(issue.path[0])] = issue.message;
       }
       return { success: false as const, errors };
     }
