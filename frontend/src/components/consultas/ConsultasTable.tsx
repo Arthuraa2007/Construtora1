@@ -99,73 +99,76 @@ export const ConsultasTable = ({
           ) : (
             consultas.map((consulta) => (
               <TableRow
-                key={consulta.id}
-                hover
-                sx={{ "&:hover": { bgcolor: "#FFF3E0" } }}
-              >
-                <TableCell align="center">
-                  {formatarDataHora(consulta.dataHora)}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.paciente?.nome || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.paciente?.cpf || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.medico?.nome || "-"}
-                </TableCell>
-                <TableCell align="center">
-                  {consulta.medico?.especialidade || "-"}
-        <TableCell align="center">
-  {consulta.imovel
-    ? `${consulta.imovel.nome} - ${consulta.imovel.endereco}`
-    : "-"}
-</TableCell>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column", // botões em coluna
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <Tooltip title="Editar">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          bgcolor: "#FB8C00", // laranja para editar
-                          color: "#fff",
-                          fontWeight: 600,
-                          "&:hover": { bgcolor: "#EF6C00" },
-                          width: "90px",
-                        }}
-                        onClick={() => onEdit(consulta)}
-                      >
-                        Editar
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="Excluir">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          bgcolor: "#E65100", // vermelho-alaranjado para excluir
-                          color: "#fff",
-                          fontWeight: 600,
-                          "&:hover": { bgcolor: "#BF360C" },
-                          width: "90px",
-                        }}
-                        onClick={() => onDelete(consulta.id)}
-                        disabled={deletingId === consulta.id}
-                      >
-                        Excluir
-                      </Button>
-                    </Tooltip>
-                  </Box>
-                </TableCell>
-              </TableRow>
+  key={consulta.id}
+  hover
+  sx={{ "&:hover": { bgcolor: "#FFF3E0" } }}
+>
+  <TableCell align="center">
+    {formatarDataHora(consulta.dataHora)}
+  </TableCell>
+  <TableCell align="center">
+    {consulta.paciente?.nome || "-"}
+  </TableCell>
+  <TableCell align="center">
+    {consulta.paciente?.cpf || "-"}
+  </TableCell>
+  <TableCell align="center">
+    {consulta.medico?.nome || "-"}
+  </TableCell>
+  <TableCell align="center">
+    {consulta.medico?.especialidade || "-"}
+  </TableCell>
+  <TableCell align="center">
+    {consulta.imovel
+      ? `${consulta.imovel.nome} - ${consulta.imovel.endereco}`
+      : "-"}
+  </TableCell>
+  <TableCell align="center">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column", // botões em coluna
+        alignItems: "center",
+        gap: 1,
+      }}
+    >
+      <Tooltip title="Editar">
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            bgcolor: "#FB8C00",
+            color: "#fff",
+            fontWeight: 600,
+            "&:hover": { bgcolor: "#EF6C00" },
+            width: "90px",
+          }}
+          onClick={() => onEdit(consulta)}
+        >
+          Editar
+        </Button>
+      </Tooltip>
+      <Tooltip title="Excluir">
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            bgcolor: "#E65100",
+            color: "#fff",
+            fontWeight: 600,
+            "&:hover": { bgcolor: "#BF360C" },
+            width: "90px",
+          }}
+          onClick={() => onDelete(consulta.id)}
+          disabled={deletingId === consulta.id}
+        >
+          Excluir
+        </Button>
+      </Tooltip>
+    </Box>
+  </TableCell>
+</TableRow>
+
             ))
           )}
         </TableBody>

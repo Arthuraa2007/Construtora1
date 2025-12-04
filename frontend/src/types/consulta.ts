@@ -5,7 +5,9 @@ export interface Consulta {
   dataHora: string;
   pacienteId: number;
   medicoId: number;
-  imovelId: number; // 🔹 referência ao imóvel escolhido
+  imovelId: number | null; // 🔹 deixe null porque é opcional na criação
+
+  motivo?: string; // 🔹 ADICIONADO (opcional)
 
   paciente?: {
     nome: string;
@@ -15,5 +17,5 @@ export interface Consulta {
     nome: string;
     especialidade: string;
   };
-  imovel?: Imovel; // 🔹 objeto completo do imóvel (opcional)
+  imovel?: Imovel;
 }

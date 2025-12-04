@@ -1,18 +1,25 @@
 import { z } from "zod";
 
+// Schema para criar consulta
 export const createConsultaSchema = z.object({
   dataHora: z.string().min(1, "Data e hora são obrigatórias"),
   motivo: z.string().optional(),
+
   pacienteId: z
-    .number({ message: "Paciente é obrigatório" })
+    .number({ message: "Cliente é obrigatório" })
     .int()
-    .positive("Selecione um paciente válido"),
+    .positive("Selecione um cliente válido"),
+
   medicoId: z
-    .number({ message: "Médico é obrigatório" })
+    .number({ message: "Atendente é obrigatório" })
     .int()
-    .positive("Selecione um médico válido"),
+    .positive("Selecione um atendente válido"),
+
+  imovelId: z
+    .number({ message: "Imóvel é obrigatório" })
+    .int()
+    .positive("Selecione um imóvel válido"),
 });
 
-export const updateConsultaSchema = createConsultaSchema.extend({
-  id: z.number().int().positive(),
-});
+// Schema para atualizar consulta
+export const updateConsultaSchema = createConsultaSchema;
