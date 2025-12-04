@@ -55,12 +55,12 @@ model Consulta {
 
   pacienteId Int
   medicoId   Int
-  imovelId   Int?   // 🔹 chave estrangeira para Imóvel
+  imovelId   Int  // 🔹 chave estrangeira para Imóvel
 
   // Relações
   paciente   Paciente @relation(fields: [pacienteId], references: [id])
   medico     Medico   @relation(fields: [medicoId], references: [id])
-  imovel     Imovel?  @relation(fields: [imovelId], references: [id])
+  imovel     Imovel  @relation(fields: [imovelId], references: [id])
 
   @@map("consultas")
 }

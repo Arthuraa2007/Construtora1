@@ -133,7 +133,7 @@ export const createImovelSchema = z.object({
     .min(5, "Endereço deve ter pelo menos 5 caracteres")
     .max(255, "Endereço deve ter no máximo 255 caracteres"),
   valor: z
-    .number({ invalid_type_error: "Valor deve ser numérico" })
+    .number("Valor deve ser numérico" )
     .positive("Valor deve ser maior que zero"),
   descricao: z
     .string()
