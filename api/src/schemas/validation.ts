@@ -122,6 +122,34 @@ export const idParamSchema = z.object({
     .transform(Number)
     .refine((num: number) => num > 0, "ID deve ser positivo"),
 });
+// Schema para Imóvel
+export const createImovelSchema = z.object({
+  nome: z
+    .string()
+    .min(2, "Nome do imóvel deve ter pelo menos 2 caracteres")
+    .max(100, "Nome do imóvel deve ter no máximo 100 caracteres"),
+  endereco: z
+    .string()
+    .min(5, "Endereço deve ter pelo menos 5 caracteres")
+    .max(255, "Endereço deve ter no máximo 255 caracteres"),
+  valor: z
+    .number({ invalid_type_error: "Valor deve ser numérico" })
+    .positive("Valor deve ser maior que zero"),
+  descricao: z
+    .string()
+    .max(500, "Descrição deve ter no máximo 500 caracteres")
+    .optional(),
+  dataConstrucao: z
+    .string()
+    .refine((date: string) => {
+      const parsedDate = new Date(date);
+      return !isNaN(parsedDate.getTime());
+    }, "Data de construção deve ser uma data válida")
+    .optional(),
+});
+
+export const updateImovelSchema = createImovelSchema.partial();
+
 
 // Tipos TypeScript derivados dos schemas
 export type CreateSecretarioData = z.infer<typeof createSecretarioSchema>;
@@ -132,4 +160,6 @@ export type CreatePacienteData = z.infer<typeof createPacienteSchema>;
 export type UpdatePacienteData = z.infer<typeof updatePacienteSchema>;
 export type CreateConsultaData = z.infer<typeof createConsultaSchema>;
 export type UpdateConsultaData = z.infer<typeof updateConsultaSchema>;
+export type CreateImovelData = z.infer<typeof createImovelSchema>;
+export type UpdateImovelData = z.infer<typeof updateImovelSchema>;
 export type IdParam = z.infer<typeof idParamSchema>;

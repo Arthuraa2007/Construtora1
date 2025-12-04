@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -14,12 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Secretario {
   id        Int      @id @default(autoincrement())
   nome      String
   email     String   @unique
-  senha     String // IMPORTANTE: Em produção, sempre armazene o hash da senha!
+  senha     String
   telefone  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -34,9 +27,9 @@ model Paciente {
   cpf            String     @unique
   telefone       String?
   dataNascimento DateTime   @db.Date
-  consultas      Consulta[] // Relação: Um paciente pode ter várias consultas
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+  consultas      Consulta[]
 
   @@map("pacientes")
 }
@@ -47,9 +40,9 @@ model Medico {
   email         String     @unique
   crm           String     @unique
   especialidade String
-  consultas     Consulta[] // Relação: Um médico pode ter várias consultas
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  consultas     Consulta[]
 
   @@map("medicos")
 }
@@ -57,15 +50,30 @@ model Medico {
 model Consulta {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
-  motivo     String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
   pacienteId Int
   medicoId   Int
+  imovelId   Int?   // 🔹 chave estrangeira para Imóvel
 
-  // Relações (chaves estrangeiras)
-  paciente Paciente @relation(fields: [pacienteId], references: [id])
-  medico   Medico   @relation(fields: [medicoId], references: [id])
+  // Relações
+  paciente   Paciente @relation(fields: [pacienteId], references: [id])
+  medico     Medico   @relation(fields: [medicoId], references: [id])
+  imovel     Imovel?  @relation(fields: [imovelId], references: [id])
 
-  @@map("consultas") // Nome da tabela no banco de dados
+  @@map("consultas")
+}
+
+model Imovel {
+  id             Int        @id @default(autoincrement())
+  nome           String
+  endereco       String
+  valor          Float
+  descricao      String?
+  dataConstrucao DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  consultas      Consulta[] // 🔹 relação inversa: um imóvel pode ter várias consultas
 }
