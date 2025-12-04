@@ -56,10 +56,10 @@ export const ConsultasPage = () => {
       const data = await getConsultas();
       setConsultas(data);
     } catch (error) {
-      console.error("Erro ao carregar consultas:", error);
+      console.error("Erro ao carregar imóveis:", error);
       setSnackbar({
         open: true,
-        message: "Erro ao buscar consultas.",
+        message: "Erro ao buscar imóveis.",
         severity: "error",
       });
     } finally {
@@ -133,8 +133,10 @@ export const ConsultasPage = () => {
       motivo?: string;
       pacienteId: number;
       medicoId: number;
+      imovelId: number; // ✅ ADICIONAR!
     }) => {
       try {
+        console.log("ENVIANDO PARA O BACKEND:", dados);
         await createConsulta(dados);
         await carregarConsultas();
         setSnackbar({
@@ -169,7 +171,8 @@ export const ConsultasPage = () => {
           consulta.paciente?.cpf.includes(termoBusca) ||
           consulta.medico?.nome.toLowerCase().includes(termoBusca) ||
           consulta.medico?.especialidade.toLowerCase().includes(termoBusca) ||
-          (consulta.motivo?.toLowerCase().includes(termoBusca) ?? false)
+          consulta.imovel?.nome?.toLowerCase().includes(termoBusca) ||   // ✅ novo
+          consulta.imovel?.endereco?.toLowerCase().includes(termoBusca)    // ✅ novo
         );
       });
     }

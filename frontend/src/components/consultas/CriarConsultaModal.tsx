@@ -28,6 +28,7 @@ interface CriarConsultaModalProps {
     motivo?: string;
     pacienteId: number;
     medicoId: number;
+    imovelId: number;
   }) => Promise<void>;
 }
 
@@ -37,11 +38,13 @@ export const CriarConsultaModal = ({
   onSave,
 }: CriarConsultaModalProps) => {
   const [formData, setFormData] = useState({
-    dataHora: "",
-    motivo: "",
-    pacienteId: 0,
-    medicoId: 0,
-  });
+  dataHora: "",
+  motivo: "",
+  pacienteId: 0,
+  medicoId: 0,
+  imovelId: 0, // <-- ADICIONE
+});
+
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -59,6 +62,7 @@ export const CriarConsultaModal = ({
         motivo: "",
         pacienteId: 0,
         medicoId: 0,
+        imovelId: 0,   // ✅ ADICIONE AQUI
       });
       setErrors({});
       setTouched({});
@@ -69,12 +73,16 @@ export const CriarConsultaModal = ({
   const loadData = async () => {
     setLoadingData(true);
     try {
-      const [pacientesData, medicosData] = await Promise.all([
-        getPacientes(),
-        getMedicos(),
-      ]);
-      setPacientes(pacientesData);
-      setMedicos(medicosData);
+      const [pacientesData, medicosData, imoveisData] = await Promise.all([
+  getPacientes(),
+  getMedicos(),
+  getImoveis(),
+]);
+
+setPacientes(pacientesData);
+setMedicos(medicosData);
+setImoveis(imoveisData);
+
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
     } finally {
@@ -197,16 +205,25 @@ export const CriarConsultaModal = ({
             />
 
             <TextField
-              label="Tipo de imóvel"
-              value={formData.motivo}
-              onChange={(e) => handleInputChange("motivo", e.target.value)}
-              onBlur={() => handleBlur("motivo")}
-              error={touched.motivo && !!errors.motivo}
-              helperText={touched.motivo && errors.motivo}
-              fullWidth
-              multiline
-              rows={3}
-            />
+                  select
+                  label="Imóvel"
+                  value={formData.imovelId}
+                  onChange={(e) =>
+                    handleInputChange("imovelId", Number(e.target.value))
+                  }
+                  onBlur={() => handleBlur("imovelId")}
+                  error={touched.imovelId && !!errors.imovelId}
+                  helperText={touched.imovelId && errors.imovelId}
+                  fullWidth
+                >
+                  <MenuItem value={0}>Selecione um Imóvel</MenuItem>
+                  {imoveis.map((imovel) => (
+                    <MenuItem key={imovel.id} value={imovel.id}>
+                      {imovel.nome} - {imovel.endereco}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
           </Box>
         )}
       </DialogContent>
