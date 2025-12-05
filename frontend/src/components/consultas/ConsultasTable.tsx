@@ -39,7 +39,7 @@ export const ConsultasTable = ({
   };
 
   const colunas: string[] = [
-    "Data/Hora",
+    "Data de Construção",
     "Cliente",
     "CPF",
     "Atendente",
