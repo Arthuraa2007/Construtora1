@@ -223,23 +223,13 @@ export const PacientesPage = () => {
 
   {/* Tabela estilizada */}
   <PacientesTable
-    pacientes={pacientesFiltrados}
-    deletingId={deletingId}
-    onDelete={handleDelete}
-    onEdit={handleOpenEditModal}
-    sx={{
-    "& thead": {
-      bgcolor: "#FF9800",
-    },
-    "& thead th": {
-      color: "#fff",
-      fontWeight: 600,
-    },
-    "& tbody tr:hover": {
-      bgcolor: "#FFF3E0",
-    },
-  }}
-  />
+  pacientes={pacientesFiltrados}
+  deletingId={deletingId}
+  onDelete={handleDelete}
+  onEdit={handleOpenEditModal}
+/>
+
+
 
   {/* Botão Novo Cliente */}
   <Box mt={3} display="flex" justifyContent="flex-end">

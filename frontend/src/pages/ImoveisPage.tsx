@@ -221,25 +221,12 @@ export const ImoveisPage = () => {
     )}
 
     {/* Tabela estilizada */}
-    <ImoveisTable
-      imoveis={imoveisFiltrados}
-      deletingId={deletingId}
-      onDelete={handleDelete}
-      onEdit={handleOpenEditModal}
-          sx={{
-        "& thead": {
-          bgcolor: "#FF9800", // cabeçalho laranja
-        },
-        "& thead th": {
-          color: "#fff",
-          fontWeight: 600,
-        },
-        "& tbody tr:hover": {
-          bgcolor: "#FFF3E0", // hover suave em laranja claro
-        },
-      }}
-    />
-
+   <ImoveisTable
+  imoveis={imoveisFiltrados}
+  deletingId={deletingId}
+  onDelete={handleDelete}
+  onEdit={handleOpenEditModal}
+/>
     {/* Botão Novo Imóvel */}
     <Box mt={3} display="flex" justifyContent="flex-end">
       <Button
