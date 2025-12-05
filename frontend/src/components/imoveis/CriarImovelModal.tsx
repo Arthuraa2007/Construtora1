@@ -64,6 +64,9 @@ export const CriarImovelModal = ({
         ...validation.data,
         valor: Number(validation.data.valor),
         descricao: validation.data.descricao || "",
+        dataConstrucao: validation.data.dataConstrucao
+          ? new Date(validation.data.dataConstrucao)
+          : undefined,
       });
       onSuccess(novoImovel);
       setFormData(INITIAL_FORM_DATA);

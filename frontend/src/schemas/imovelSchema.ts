@@ -27,11 +27,12 @@ export const createImovelSchema = z.object({
 
   dataConstrucao: z
     .string()
+    .optional()
     .refine((date) => {
-      const parsedDate = new Date(date);
-      return !isNaN(parsedDate.getTime());
-    }, "Data de construção deve ser uma data válida")
-    .optional(),
-});
+      if (!date) return true; // campo vazio é válido
+      const parsed = new Date(date);
+      return !isNaN(parsed.getTime());
+    }, "Data de construção deve ser uma data válida"),
+  });
 
 export const updateImovelSchema = createImovelSchema.partial();
