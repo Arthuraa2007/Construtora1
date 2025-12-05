@@ -131,7 +131,7 @@ export const EditarConsultaModal = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Editar Consulta</DialogTitle>
+      <DialogTitle>Editar Imóvel para o cliente</DialogTitle>
       <DialogContent>
         {loadingData ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 4, mt: 2 }}>
@@ -141,7 +141,7 @@ export const EditarConsultaModal = ({
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
             <TextField
               select
-              label="Paciente"
+              label="Cliente"
               value={formData.pacienteId}
               onChange={(e) =>
                 handleInputChange("pacienteId", Number(e.target.value))
@@ -160,7 +160,7 @@ export const EditarConsultaModal = ({
 
             <TextField
               select
-              label="Médico"
+              label="Atendente"
               value={formData.medicoId}
               onChange={(e) =>
                 handleInputChange("medicoId", Number(e.target.value))
@@ -178,7 +178,7 @@ export const EditarConsultaModal = ({
             </TextField>
 
             <TextField
-              label="Data e Hora"
+              label="Data de Construção"
               type="datetime-local"
               value={formData.dataHora}
               onChange={(e) => handleInputChange("dataHora", e.target.value)}
