@@ -10,8 +10,9 @@ export const create = async (data: ImovelCreateData): Promise<Imovel> => {
   return prisma.imovel.create({
     data: {
       ...data,
-      // caso tenha algum campo de data, você pode converter aqui
-      // exemplo: dataConstrucao: data.dataConstrucao ? new Date(data.dataConstrucao) : undefined
+      dataConstrucao: data.dataConstrucao
+        ? new Date(data.dataConstrucao)
+        : undefined,
     },
   });
 };
@@ -35,7 +36,9 @@ export const update = async (
     where: { id },
     data: {
       ...data,
-      // se houver campos de data, converter aqui também
+       dataConstrucao: data.dataConstrucao
+        ? new Date(data.dataConstrucao)
+        : undefined,
     },
   });
 };
